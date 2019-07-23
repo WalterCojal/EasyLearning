@@ -1,5 +1,7 @@
 package com.walter.cojal.easylearning.presentation.splash;
 
+import android.content.Context;
+
 import com.walter.cojal.easylearning.data.Entities.User;
 
 public interface ISplashContract {
@@ -9,6 +11,8 @@ public interface ISplashContract {
         void getUpdateSuccess(int code);
         void getUserSuccess(User user);
         void showUpdateDialog();
+        void goToLogin();
+        void goToDashboard();
     }
 
     interface IPresenter {
@@ -16,7 +20,7 @@ public interface ISplashContract {
         void dettachView();
         boolean isAttached();
         void getUpdate();
-        void getUser();
+        void getUser(Context context, String key);
     }
 
 }

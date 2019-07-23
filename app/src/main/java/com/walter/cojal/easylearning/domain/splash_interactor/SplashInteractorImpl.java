@@ -1,5 +1,8 @@
 package com.walter.cojal.easylearning.domain.splash_interactor;
 
+import android.content.Context;
+
+import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.network.ApiClient;
 import com.walter.cojal.easylearning.network.ServiceApi;
 
@@ -10,26 +13,31 @@ import retrofit2.Response;
 public class SplashInteractorImpl implements ISplashInteractor{
 
     @Override
-    public void getUserData(UserCallBack callBack) {
+    public void getUserData(Context context, String key, UserCallBack callBack) {
 
     }
 
     @Override
     public void getUpdateData(final UpdateCallBack callBack) {
         ServiceApi api = ApiClient.client().create(ServiceApi.class);
-        Call<Integer> call = api.getInitData();
-        call.enqueue(new Callback<Integer>() {
+        Call<Result> call = api.getInitData();
+        call.enqueue(new Callback<Result>() {
             @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
+            public void onResponse(Call<Result> call, Response<Result> response) {
                 if (response.isSuccessful()) {
-                    callBack.onSuccess(response.body());
+                    Result result = response.body();
+                    if (result != null && result.isSuccess()) {
+                        callBack.onSuccess(result.getCode());
+                    } else {
+                        callBack.onError(result.getMessage());
+                    }
                 } else {
                     callBack.onError("Code: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
+            public void onFailure(Call<Result> call, Throwable t) {
                 callBack.onError(t.getLocalizedMessage());
             }
         });

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="primaryRadius">16</dimen>
+    <dimen name="primaryHeight">48</dimen>
 </resources>

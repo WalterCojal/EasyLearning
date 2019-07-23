@@ -1,5 +1,7 @@
 package com.walter.cojal.easylearning.domain.splash_interactor;
 
+import android.content.Context;
+
 import com.walter.cojal.easylearning.data.Entities.User;
 
 public interface ISplashInteractor {
@@ -14,7 +16,7 @@ public interface ISplashInteractor {
         void onError(String errorMsg);
     }
 
-    void getUserData(UserCallBack callBack);
+    void getUserData(Context context, String key, UserCallBack callBack);
     void getUpdateData(UpdateCallBack callBack);
 
 }
