@@ -9,7 +9,7 @@ public interface ISplashContract {
     interface IView {
         void showError(String errorMsg);
         void getUpdateSuccess(int code);
-        void getUserSuccess(User user);
+        void getUser(User user);
         void showUpdateDialog();
         void goToLogin();
         void goToDashboard();
@@ -20,7 +20,7 @@ public interface ISplashContract {
         void dettachView();
         boolean isAttached();
         void getUpdate();
-        void getUser(Context context, String key);
+        void getDataUser(Context context, String key);
     }
 
 }

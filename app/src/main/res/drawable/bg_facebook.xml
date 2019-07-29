@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_enabled="true">
-        <ripple android:color="@color/colorPrimaryLight">
+        <ripple android:color="@color/colorFacebookLight">
             <item>
                 <shape android:shape="rectangle">
                     <corners android:radius="@dimen/halfRadius"/>
-                    <solid android:color="@color/colorPrimary"/>
+                    <solid android:color="@color/colorFacebook"/>
                     <size android:height="@dimen/primaryHeight"/>
+                    <padding android:top="@dimen/easy_4"
+                        android:right="@dimen/easy_4"
+                        android:left="@dimen/easy_4"
+                        android:bottom="@dimen/easy_4"/>
                 </shape>
             </item>
         </ripple>

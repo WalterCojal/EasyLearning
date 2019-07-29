@@ -6,6 +6,7 @@ import com.walter.cojal.easylearning.data.Entities.User;
 import com.walter.cojal.easylearning.domain.splash_interactor.ISplashInteractor;
 import com.walter.cojal.easylearning.domain.splash_interactor.SplashInteractorImpl;
 import com.walter.cojal.easylearning.presentation.splash.ISplashContract;
+import com.walter.cojal.easylearning.utility.SavePreferences;
 
 public class SplashPresenter implements ISplashContract.IPresenter {
 
@@ -47,17 +48,9 @@ public class SplashPresenter implements ISplashContract.IPresenter {
     }
 
     @Override
-    public void getUser(Context context, String key) {
-        interactor.getUserData(context, key, new ISplashInteractor.UserCallBack() {
-            @Override
-            public void onSuccess(User user) {
-                view.getUserSuccess(user);
-            }
-
-            @Override
-            public void onError(String errorMsg) {
-                view.showError(errorMsg);
-            }
-        });
+    public void getDataUser(Context context, String key) {
+        SavePreferences savePreferences = new SavePreferences(context);
+        User user = savePreferences.getUser(key);
+        view.getUser(user);
     }
 }

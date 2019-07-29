@@ -4,7 +4,7 @@
         <ripple android:color="@color/colorAccentLight">
             <item>
                 <shape android:shape="rectangle">
-                    <corners android:radius="@dimen/primaryRadius"/>
+                    <corners android:radius="@dimen/halfRadius"/>
                     <solid android:color="@color/colorAccent"/>
                     <size android:height="@dimen/primaryHeight"/>
                     <padding android:bottom="4dp"
@@ -17,7 +17,7 @@
     </item>
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
-            <corners android:radius="@dimen/primaryRadius"/>
+            <corners android:radius="@dimen/halfRadius"/>
             <solid android:color="@color/secondaryText"/>
             <size android:height="@dimen/primaryHeight"/>
         </shape>

@@ -1,7 +1,5 @@
 package com.walter.cojal.easylearning.domain.splash_interactor;
 
-import android.content.Context;
-
 import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.network.ApiClient;
 import com.walter.cojal.easylearning.network.ServiceApi;
@@ -11,11 +9,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SplashInteractorImpl implements ISplashInteractor{
-
-    @Override
-    public void getUserData(Context context, String key, UserCallBack callBack) {
-
-    }
 
     @Override
     public void getUpdateData(final UpdateCallBack callBack) {

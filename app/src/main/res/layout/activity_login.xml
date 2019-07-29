@@ -4,61 +4,123 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_splash"
     tools:context=".presentation.login.view.LoginActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
+    <EditText
         android:id="@+id/login_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:background="@drawable/bg_accent"
-        android:text="Ingresar con correo"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/easy_48"
+        android:layout_marginEnd="@dimen/easy_48"
+        android:layout_marginBottom="@dimen/easy_16"
+        android:background="@drawable/bg_input"
+        android:ems="10"
+        android:hint="Correo electrónico"
+        android:inputType="textEmailAddress"
+        android:paddingStart="@dimen/easy_16"
+        android:paddingEnd="@dimen/easy_16"
+        app:layout_constraintBottom_toTopOf="@+id/login_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/easy_48"
+        android:layout_marginEnd="@dimen/easy_48"
+        android:layout_marginBottom="@dimen/easy_16"
+        android:background="@drawable/bg_input"
+        android:ems="10"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:paddingStart="@dimen/easy_16"
+        android:paddingEnd="@dimen/easy_16"
+        app:layout_constraintBottom_toTopOf="@+id/login_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/easy_16"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/login_password"
+        app:layout_constraintEnd_toEndOf="@+id/login_password"
+        app:layout_constraintTop_toTopOf="@+id/login_password"
+        app:srcCompat="@drawable/check_password" />
+
+    <Button
+        android:id="@+id/login_main"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/easy_48"
+        android:layout_marginEnd="@dimen/easy_48"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_contrast"
+        android:text="Ingresar"
+        android:textColor="@color/contrastText"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/easy_48"
+        android:layout_marginEnd="@dimen/easy_48"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/login_phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/easy_1"
+            android:layout_marginStart="@dimen/easy_16"
+            android:layout_marginEnd="@dimen/easy_6"
+            android:layout_weight="1"
+            android:background="@color/contrastText" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ó"
+            android:textAlignment="center"
+            android:textColor="@color/contrastText"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/easy_1"
+            android:layout_marginStart="@dimen/easy_6"
+            android:layout_marginEnd="@dimen/easy_16"
+            android:layout_weight="1"
+            android:background="@color/contrastText" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/login_phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/bg_primary"
+        android:layout_marginStart="@dimen/easy_48"
+        android:layout_marginEnd="@dimen/easy_48"
+        android:layout_marginBottom="@dimen/easy_48"
+        android:background="@drawable/bg_facebook"
         android:text="ingresar con teléfono"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/login_email"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Ingresa"
-        android:textColor="@color/primaryText"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#137CC1</color>
     <color name="colorPrimaryLight">#54A1D3</color>
+    <color name="colorPrimary">#137CC1</color>
     <color name="colorPrimaryDark">#1168A2</color>
-    <color name="colorAccent">#000000</color>
-    <color name="colorAccentLight">#2C2C2C</color>
-    <color name="colorContrast">#EC336C</color>
-    <color name="colorContrastLight">#F0759B</color>
+    <color name="colorAccentLight">#5CEDFA</color>
+    <color name="colorAccent">#47B4BE</color>
+    <color name="colorAccentDark">#36868D</color>
+    <color name="colorContrastLight">#FDE280</color>
+    <color name="colorContrast">#FFC909</color>
+    <color name="colorContrastDark">#CEA208</color>
     <color name="white">#FFFFFF</color>
     <color name="primaryText">#151827</color>
     <color name="secondaryText">#868484</color>
+    <color name="contrastText">#032689</color>
+    <color name="colorFacebook">#4169E1</color>
+    <color name="colorFacebookLight">#7896EC</color>
+    <color name="togglePassword">#1168A2</color>
 </resources>

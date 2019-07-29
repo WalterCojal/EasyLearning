@@ -25,7 +25,7 @@ public class SplashActivity extends AppCompatActivity implements ISplashContract
         setContentView(R.layout.activity_splash);
         presenter = new SplashPresenter(new SplashInteractorImpl());
         presenter.attachView(this);
-        presenter.getUser(this, USER_KEY);
+        presenter.getDataUser(this, USER_KEY);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SplashActivity extends AppCompatActivity implements ISplashContract
     }
 
     @Override
-    public void getUserSuccess(User user) {
+    public void getUser(User user) {
         if (user == null) goToLogin();
         else goToDashboard();
     }
@@ -58,6 +58,7 @@ public class SplashActivity extends AppCompatActivity implements ISplashContract
     @Override
     public void goToDashboard() {
         startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 
     @Override
