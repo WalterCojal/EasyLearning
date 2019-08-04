@@ -2,21 +2,22 @@ package com.walter.cojal.easylearning.presentation.login;
 
 import com.walter.cojal.easylearning.data.Entities.User;
 
-interface ILoginContract {
+public interface ILoginContract {
 
     interface IView {
         void showProgress();
         void hideProgress();
-        void showError();
-        void validate();
+        void showError(String error);
+        Boolean validate();
         void loginSuccess(User user);
         void loginError(String message, int status);
+        void goToDashboard();
     }
 
     interface IPresenter {
-        void attachView();
+        void attachView(IView view);
         void dettachView();
-        Boolean isViewAttaached();
+        Boolean isViewAttached();
         void login(String email, String password,String token);
     }
 

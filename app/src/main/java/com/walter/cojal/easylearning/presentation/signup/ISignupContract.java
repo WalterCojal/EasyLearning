@@ -2,13 +2,14 @@ package com.walter.cojal.easylearning.presentation.signup;
 
 import com.walter.cojal.easylearning.data.Entities.User;
 
-interface ISignupContract {
+public interface ISignupContract {
 
     interface IView {
         void showProgress();
         void hideProgress();
         void showError(String error);
         void signupSuccess(String message);
+        void signupError(String message, int code);
         void validate();
     }
 

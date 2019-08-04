@@ -39,4 +39,9 @@ public class SignupActivity extends AppCompatActivity implements ISignupContract
     public void validate() {
 
     }
+
+    @Override
+    public void signupError(String message, int code) {
+
+    }
 }

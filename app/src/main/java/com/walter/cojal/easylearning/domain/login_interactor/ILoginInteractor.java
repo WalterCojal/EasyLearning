@@ -1,4 +1,4 @@
-package com.walter.cojal.easylearning.domain.loginInteractor;
+package com.walter.cojal.easylearning.domain.login_interactor;
 
 import com.walter.cojal.easylearning.data.Entities.User;
 

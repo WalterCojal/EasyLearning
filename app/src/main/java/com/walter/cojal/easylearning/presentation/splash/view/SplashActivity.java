@@ -6,24 +6,29 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.walter.cojal.easylearning.MyApplication;
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.data.Entities.User;
-import com.walter.cojal.easylearning.domain.splash_interactor.SplashInteractorImpl;
 import com.walter.cojal.easylearning.presentation.home.view.HomeActivity;
 import com.walter.cojal.easylearning.presentation.login.view.LoginActivity;
 import com.walter.cojal.easylearning.presentation.splash.ISplashContract;
 import com.walter.cojal.easylearning.presentation.splash.presenter.SplashPresenter;
 import com.walter.cojal.easylearning.utility.Constant;
 
+import javax.inject.Inject;
+
 public class SplashActivity extends AppCompatActivity implements ISplashContract.IView, Constant {
 
+    @Inject
     SplashPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        presenter = new SplashPresenter(new SplashInteractorImpl());
+        MyApplication myApplication = (MyApplication) getApplication();
+        myApplication.getAppComponent().inject(this);
+
         presenter.attachView(this);
         presenter.getDataUser(this, USER_KEY);
     }

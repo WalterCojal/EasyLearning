@@ -17,7 +17,6 @@
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
         <item name="colorControlHighlight">@color/colorPrimary</item>
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowBackground">@drawable/bg_base</item>
     </style>
 
     <style name="AppThemeSplash" parent="Theme.AppCompat.Light.NoActionBar">

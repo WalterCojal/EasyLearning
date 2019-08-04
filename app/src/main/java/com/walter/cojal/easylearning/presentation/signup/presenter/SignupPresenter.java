@@ -5,6 +5,9 @@ import com.walter.cojal.easylearning.presentation.signup.ISignupContract;
 
 public class SignupPresenter implements ISignupContract.IPresenter {
 
+    public SignupPresenter() {
+    }
+
     @Override
     public void attachView(ISignupContract.IView view) {
 

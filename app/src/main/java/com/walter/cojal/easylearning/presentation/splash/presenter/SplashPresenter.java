@@ -8,11 +8,14 @@ import com.walter.cojal.easylearning.domain.splash_interactor.SplashInteractorIm
 import com.walter.cojal.easylearning.presentation.splash.ISplashContract;
 import com.walter.cojal.easylearning.utility.SavePreferences;
 
+import javax.inject.Inject;
+
 public class SplashPresenter implements ISplashContract.IPresenter {
 
     private ISplashContract.IView view;
     private SplashInteractorImpl interactor;
 
+    @Inject
     public SplashPresenter(SplashInteractorImpl interactor) {
         this.interactor = interactor;
     }

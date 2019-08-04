@@ -7,35 +7,143 @@
     android:background="@color/colorPrimary"
     tools:context=".presentation.signup.view.SignupActivity">
 
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/easy_32"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/sign_agree"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/sign_photo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="@dimen/easy_32"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="@dimen/easy_32"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_user"
+                app:riv_border_width="0dp"
+                app:riv_corner_radius="40dip"
+                app:riv_mutate_background="true"
+                app:riv_tile_mode="clamp" />
+
+            <EditText
+                android:id="@+id/sign_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/easy_40"
+                android:layout_marginTop="@dimen/easy_8"
+                android:layout_marginEnd="@dimen/easy_40"
+                android:layout_marginBottom="@dimen/easy_8"
+                android:background="@drawable/bg_input"
+                android:ems="10"
+                android:hint="@string/name"
+                android:inputType="textPersonName|textCapWords"
+                android:paddingStart="@dimen/easy_16"
+                android:paddingEnd="@dimen/easy_16"
+                android:textColor="@color/primaryText"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/sign_lastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/easy_40"
+                android:layout_marginTop="@dimen/easy_8"
+                android:layout_marginEnd="@dimen/easy_40"
+                android:layout_marginBottom="@dimen/easy_8"
+                android:background="@drawable/bg_input"
+                android:ems="10"
+                android:hint="@string/lastname"
+                android:inputType="textPersonName|textCapWords"
+                android:paddingStart="@dimen/easy_16"
+                android:paddingEnd="@dimen/easy_16"
+                android:textColor="@color/primaryText"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/sign_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/easy_40"
+                android:layout_marginTop="@dimen/easy_8"
+                android:layout_marginEnd="@dimen/easy_40"
+                android:layout_marginBottom="@dimen/easy_8"
+                android:background="@drawable/bg_input"
+                android:ems="10"
+                android:hint="@string/phone"
+                android:inputType="phone"
+                android:paddingStart="@dimen/easy_16"
+                android:paddingEnd="@dimen/easy_16"
+                android:textColor="@color/primaryText"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/sign_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/easy_40"
+                android:layout_marginTop="@dimen/easy_8"
+                android:layout_marginEnd="@dimen/easy_40"
+                android:layout_marginBottom="@dimen/easy_8"
+                android:background="@drawable/bg_input"
+                android:ems="10"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:paddingStart="@dimen/easy_16"
+                android:paddingEnd="@dimen/easy_16"
+                android:textColor="@color/primaryText"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/sign_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/easy_40"
+                android:layout_marginTop="@dimen/easy_8"
+                android:layout_marginEnd="@dimen/easy_40"
+                android:layout_marginBottom="@dimen/easy_8"
+                android:background="@drawable/bg_input"
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:paddingStart="@dimen/easy_16"
+                android:paddingEnd="@dimen/easy_16"
+                android:textColor="@color/primaryText"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
     <Button
         android:id="@+id/sign_agree"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/easy_48"
+        android:layout_marginTop="@dimen/easy_8"
         android:layout_marginEnd="@dimen/easy_48"
-        android:layout_marginBottom="@dimen/easy_48"
+        android:layout_marginBottom="@dimen/easy_24"
         android:background="@drawable/bg_contrast"
         android:text="Registrar"
         android:textColor="@color/contrastText"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
-    <EditText
-        android:id="@+id/sign_password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/easy_48"
-        android:layout_marginEnd="@dimen/easy_48"
-        android:layout_marginBottom="@dimen/easy_32"
-        android:background="@drawable/bg_input"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:paddingStart="@dimen/easy_16"
-        android:paddingEnd="@dimen/easy_16"
-        android:text="Name"
-        app:layout_constraintBottom_toTopOf="@+id/sign_agree"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">EasyLEarning</string>
+    <string name="password">Contraseña</string>
+    <string name="signin_with_phone">ingresar con teléfono</string>
+    <string name="signin">Ingresar</string>
+    <string name="email">Correo electrónico</string>
+    <string name="phone">Celular</string>
+    <string name="lastname">Apellidos</string>
+    <string name="name">Nombres</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sign_failed">Fallo al ingresar</string>
 </resources>
