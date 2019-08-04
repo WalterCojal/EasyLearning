@@ -11,5 +11,4 @@ import dagger.Component;
 public interface PresentationComponent {
     void inject(LoginActivity loginActivity);
     void inject(SignupActivity signupActivity);
-    void inject(SplashActivity splashActivity);
 }

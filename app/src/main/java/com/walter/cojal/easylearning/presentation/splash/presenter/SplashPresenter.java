@@ -15,7 +15,6 @@ public class SplashPresenter implements ISplashContract.IPresenter {
     private ISplashContract.IView view;
     private SplashInteractorImpl interactor;
 
-    @Inject
     public SplashPresenter(SplashInteractorImpl interactor) {
         this.interactor = interactor;
     }

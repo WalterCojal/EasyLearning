@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +24,7 @@ import javax.inject.Inject;
 public class LoginActivity extends AppCompatActivity implements ILoginContract.IView {
 
     Button signin;
-    TextView txtEmail, txtPassword;
+    EditText txtEmail, txtPassword;
     LoginStatusFragment statusFragment;
     @Inject LoginPresenter presenter;
 
@@ -39,7 +40,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.I
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.login(txtEmail.getText().toString(), txtPassword.getText().toString(), "");
+                // presenter.login(txtEmail.getText().toString(), txtPassword.getText().toString(), "");
+                goToDashboard();
             }
         });
         presenter.attachView(this);

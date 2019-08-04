@@ -13,6 +13,19 @@ public class User {
     private String password;
     private String token;
 
+    public User(int id, String name, String lastName, String surName, String email, String phone, String birthDate, String age, String password, String token) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.surName = surName;
+        this.email = email;
+        this.phone = phone;
+        this.birthDate = birthDate;
+        this.age = age;
+        this.password = password;
+        this.token = token;
+    }
+
     public int getId() {
         return id;
     }
