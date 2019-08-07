@@ -60,4 +60,28 @@ public class LoginInteractorImpl implements ILoginInteractor {
             }
         });
     }
+
+    @Override
+    public void validatePhone(String phone, final ValidatePhoneCallback callback) {
+        Call<Result> call = api.validatePhone(phone);
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().isSuccess()) {
+                        callback.onUserSuccess(response.body().getUser());
+                    } else {
+                        callback.onNewUser();
+                    }
+                } else {
+                    callback.onError("Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                callback.onError("Error: " + t.getLocalizedMessage());
+            }
+        });
+    }
 }

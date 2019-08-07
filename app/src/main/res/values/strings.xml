@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EasyLEarning</string>
+    <string name="app_name">Easy Learning</string>
     <string name="password">Contraseña</string>
     <string name="signin_with_phone">ingresar con teléfono</string>
     <string name="signin">Ingresar</string>
@@ -11,4 +11,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_failed">Fallo al ingresar</string>
+
+    <string name="FACEBOOK_APP_ID">1311989565578420</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">014926972a83f6b8b9b67f5d7c29bc05</string>
+
 </resources>

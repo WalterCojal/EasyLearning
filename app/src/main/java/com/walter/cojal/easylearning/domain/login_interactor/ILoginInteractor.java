@@ -15,7 +15,14 @@ public interface ILoginInteractor {
         void onError(String error);
     }
 
+    interface ValidatePhoneCallback {
+        void onUserSuccess(User user);
+        void onNewUser();
+        void onError(String error);
+    }
+
     void login(String email, String password, String token, LoginCallback callback);
     void sendEmail(String email, EmailCallback emailCallback);
+    void validatePhone(String phone, ValidatePhoneCallback callback);
 
 }

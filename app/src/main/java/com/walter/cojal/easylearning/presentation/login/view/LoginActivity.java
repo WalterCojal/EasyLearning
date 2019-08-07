@@ -2,13 +2,23 @@ package com.walter.cojal.easylearning.presentation.login.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.facebook.accountkit.Account;
+import com.facebook.accountkit.AccountKit;
+import com.facebook.accountkit.AccountKitCallback;
+import com.facebook.accountkit.AccountKitError;
+import com.facebook.accountkit.AccountKitLoginResult;
+import com.facebook.accountkit.ui.AccountKitActivity;
+import com.facebook.accountkit.ui.AccountKitConfiguration;
+import com.facebook.accountkit.ui.LoginType;
+import com.facebook.accountkit.ui.SkinManager;
 import com.walter.cojal.easylearning.MyApplication;
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.data.Entities.User;
@@ -26,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.I
     Button signin;
     EditText txtEmail, txtPassword;
     LoginStatusFragment statusFragment;
+    public static int APP_REQUEST_CODE = 99;
     @Inject LoginPresenter presenter;
 
     @Override
@@ -83,7 +94,66 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.I
     }
 
     @Override
+    public void accountKitLogin() {
+        final Intent intent = new Intent(this, AccountKitActivity.class);
+        AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
+                new AccountKitConfiguration.AccountKitConfigurationBuilder(
+                        LoginType.PHONE,
+                        AccountKitActivity.ResponseType.TOKEN);
+        // ... perform additional configuration ...
 
+        SkinManager manager = new SkinManager(
+                SkinManager.Skin.CONTEMPORARY,
+                getResources().getColor(R.color.colorPrimary),
+                R.drawable.splash,
+                SkinManager.Tint.WHITE,
+                0.7
+        );
+        configurationBuilder.setUIManager(manager);
+        intent.putExtra(
+                AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
+                configurationBuilder.build());
+        startActivityForResult(intent, APP_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == APP_REQUEST_CODE) {
+            AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
+            String message;
+            if (loginResult.getError() != null) {
+                message = loginResult.getError().getErrorType().getMessage();
+            } else if (loginResult.wasCancelled()) {
+                message = "Inicio de sesión cancelado";
+            } else {
+                if (loginResult.getAccessToken() != null) {
+                    message = "Inició sesión: " + loginResult.getAccessToken().getAccountId();
+                } else {
+                    message = String.format("Inicio de sesión:%s...", loginResult.getAuthorizationCode().substring(0,10));
+                }
+            }
+            Log.i(getLocalClassName(), message);
+            getAccountKitData();
+        }
+    }
+
+    private void getAccountKitData() {
+        AccountKit.getCurrentAccount(new AccountKitCallback<Account>() {
+            @Override
+            public void onSuccess(Account account) {
+                String number = account.getPhoneNumber().toString();
+            }
+
+            @Override
+            public void onError(AccountKitError accountKitError) {
+                showError(accountKitError.toString());
+                AccountKit.logOut();
+            }
+        });
+    }
+
+    @Override
     public void loginSuccess(User user) {
         SavePreferences savePreferences = new SavePreferences(this);
         savePreferences.saveUser(Constant.USER_KEY, user);

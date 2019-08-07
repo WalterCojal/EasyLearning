@@ -30,4 +30,8 @@ public interface ServiceApi {
     @FormUrlEncoded
     Call<Result> sendEmail(@Field("email") String email);
 
+    @POST("validatePhone")
+    @FormUrlEncoded
+    Call<Result> validatePhone(@Field("phone") String phone);
+
 }
