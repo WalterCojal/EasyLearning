@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.accountkit.Account;
 import com.facebook.accountkit.AccountKit;
@@ -19,9 +18,11 @@ import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
 import com.facebook.accountkit.ui.SkinManager;
-import com.walter.cojal.easylearning.MyApplication;
 import com.walter.cojal.easylearning.R;
+import com.walter.cojal.easylearning.base.BaseActivity;
 import com.walter.cojal.easylearning.data.Entities.User;
+import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
+import com.walter.cojal.easylearning.di.module.PresentationModule;
 import com.walter.cojal.easylearning.presentation.home.view.HomeActivity;
 import com.walter.cojal.easylearning.presentation.login.ILoginContract;
 import com.walter.cojal.easylearning.presentation.login.presenter.LoginPresenter;
@@ -29,22 +30,27 @@ import com.walter.cojal.easylearning.utility.Constant;
 import com.walter.cojal.easylearning.utility.SavePreferences;
 import com.walter.cojal.easylearning.utility.Util;
 
-import javax.inject.Inject;
-
-public class LoginActivity extends AppCompatActivity implements ILoginContract.IView {
+public class LoginActivity extends BaseActivity implements ILoginContract.IView {
 
     Button signin;
     EditText txtEmail, txtPassword;
     LoginStatusFragment statusFragment;
     public static int APP_REQUEST_CODE = 99;
-    @Inject LoginPresenter presenter;
+    LoginPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        MyApplication application = (MyApplication) getApplication();
-        application.getAppComponent().inject(this);
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void onViewReady(Bundle saveInstanceState, Intent intent) {
+        super.onViewReady(saveInstanceState, intent);
         txtEmail = findViewById(R.id.login_email);
         txtPassword = findViewById(R.id.login_password);
         signin = findViewById(R.id.login_main);
@@ -56,6 +62,14 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.I
             }
         });
         presenter.attachView(this);
+    }
+
+    @Override
+    protected void resolveDaggerDependency() {
+        DaggerPresentationComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .presentationModule(new PresentationModule())
+                .build().inject(this);
     }
 
     @Override
@@ -186,9 +200,9 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.I
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onDetachedFromWindow() {
         presenter.dettachView();
+        super.onDetachedFromWindow();
     }
 
     @Override

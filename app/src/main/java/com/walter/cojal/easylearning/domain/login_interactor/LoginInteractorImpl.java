@@ -1,8 +1,9 @@
 package com.walter.cojal.easylearning.domain.login_interactor;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
-import com.walter.cojal.easylearning.network.ApiClient;
 import com.walter.cojal.easylearning.network.ServiceApi;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -10,7 +11,12 @@ import retrofit2.Response;
 
 public class LoginInteractorImpl implements ILoginInteractor {
 
-    ServiceApi api = ApiClient.client().create(ServiceApi.class);
+    ServiceApi api;
+
+    @Inject
+    public LoginInteractorImpl(ServiceApi api) {
+        this.api = api;
+    }
 
     @Override
     public void login(String email, String password, String token, final LoginCallback callback) {

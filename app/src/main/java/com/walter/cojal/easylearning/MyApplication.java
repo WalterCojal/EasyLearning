@@ -2,13 +2,13 @@ package com.walter.cojal.easylearning;
 
 import android.app.Application;
 
-import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
-import com.walter.cojal.easylearning.di.component.PresentationComponent;
-import com.walter.cojal.easylearning.di.module.PresentationModule;
+import com.walter.cojal.easylearning.di.component.ApplicationComponent;
+import com.walter.cojal.easylearning.di.component.DaggerApplicationComponent;
+import com.walter.cojal.easylearning.di.module.ApplicationModule;
 
 public class MyApplication extends Application {
 
-    private PresentationComponent appComponent;
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
@@ -17,12 +17,13 @@ public class MyApplication extends Application {
     }
 
     void initializeComponent() {
-        appComponent = DaggerPresentationComponent.builder()
-                .presentationModule(new PresentationModule())
+        applicationComponent = DaggerApplicationComponent
+                .builder()
+                .applicationModule(new ApplicationModule())
                 .build();
     }
 
-    public PresentationComponent getAppComponent() {
-        return appComponent;
+    public ApplicationComponent getApplicationComponent() {
+        return applicationComponent;
     }
 }
