@@ -1,18 +1,39 @@
 package com.walter.cojal.easylearning.presentation.signup.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.walter.cojal.easylearning.R;
+import com.walter.cojal.easylearning.base.BaseActivity;
 import com.walter.cojal.easylearning.presentation.signup.ISignupContract;
+import com.walter.cojal.easylearning.presentation.signup.presenter.SignupPresenter;
 
-public class SignupActivity extends AppCompatActivity implements ISignupContract.IView {
+import javax.inject.Inject;
+
+public class SignupActivity extends BaseActivity implements ISignupContract.IView {
+
+    @Inject
+    SignupPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_signup;
+    }
+
+    @Override
+    protected void onViewReady(Bundle saveInstanceState, Intent intent) {
+        super.onViewReady(saveInstanceState, intent);
+        presenter.attachView(this);
+    }
+
+    @Override
+    protected void resolveDaggerDependency() {
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.walter.cojal.easylearning.presentation.login.view;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,13 +31,18 @@ import com.walter.cojal.easylearning.utility.Constant;
 import com.walter.cojal.easylearning.utility.SavePreferences;
 import com.walter.cojal.easylearning.utility.Util;
 
+import javax.inject.Inject;
+
 public class LoginActivity extends BaseActivity implements ILoginContract.IView {
 
     Button signin;
     EditText txtEmail, txtPassword;
     LoginStatusFragment statusFragment;
     public static int APP_REQUEST_CODE = 99;
+    @Inject
     LoginPresenter presenter;
+    @Inject
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +80,15 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
 
     @Override
     public void showProgress() {
-
+        progressDialog.setMessage("Espere...");
+        progressDialog.show();
     }
 
     @Override
     public void hideProgress() {
-
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override

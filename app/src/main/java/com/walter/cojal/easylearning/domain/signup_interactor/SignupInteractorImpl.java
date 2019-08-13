@@ -5,15 +5,24 @@ import com.walter.cojal.easylearning.data.Entities.User;
 import com.walter.cojal.easylearning.network.ApiClient;
 import com.walter.cojal.easylearning.network.ServiceApi;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SignupInteractorImpl implements ISignupInteractor {
 
+    ServiceApi api;
+
+    @Inject
+    public SignupInteractorImpl(ServiceApi api) {
+        this.api = api;
+    }
+
     @Override
     public void signUp(User user, final SignupCallback callback) {
-        ServiceApi api = ApiClient.client().create(ServiceApi.class);
+        api = ApiClient.client().create(ServiceApi.class);
         Call<Result> call = api.signup(user);
         call.enqueue(new Callback<Result>() {
             @Override

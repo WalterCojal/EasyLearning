@@ -15,7 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".base.BaseActivity"></activity>
+        <activity
+            android:name=".presentation.start.view.StartActivity"
+            android:theme="@style/AppThemeSplash"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".base.BaseActivity" />
 
         <meta-data
             android:name="com.facebook.accountkit.ApplicationName"
@@ -35,23 +39,20 @@
         <activity
             android:name=".presentation.home.view.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeBase" />
-        <activity
-            android:name=".presentation.splash.view.SplashActivity"
-            android:theme="@style/AppThemeSplash">
+            android:theme="@style/AppThemeBase">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".presentation.login.view.LoginActivity"
             android:theme="@style/AppThemeSplash">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

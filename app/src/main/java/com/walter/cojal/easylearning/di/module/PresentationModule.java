@@ -5,8 +5,8 @@ import com.walter.cojal.easylearning.domain.login_interactor.ILoginInteractor;
 import com.walter.cojal.easylearning.domain.login_interactor.LoginInteractorImpl;
 import com.walter.cojal.easylearning.domain.signup_interactor.ISignupInteractor;
 import com.walter.cojal.easylearning.domain.signup_interactor.SignupInteractorImpl;
-import com.walter.cojal.easylearning.domain.splash_interactor.ISplashInteractor;
-import com.walter.cojal.easylearning.domain.splash_interactor.SplashInteractorImpl;
+import com.walter.cojal.easylearning.domain.start_interactor.IStartInteractor;
+import com.walter.cojal.easylearning.domain.start_interactor.StartInteractorImpl;
 import com.walter.cojal.easylearning.network.ServiceApi;
 
 import dagger.Module;
@@ -28,13 +28,13 @@ public class PresentationModule {
     }
 
     @Provides
-    ISignupInteractor provideSignupInteractor() {
-        return new SignupInteractorImpl();
+    ISignupInteractor provideSignupInteractor(ServiceApi serviceApi) {
+        return new SignupInteractorImpl(serviceApi);
     }
 
     @Provides
-    ISplashInteractor provideSplashInteractor() {
-        return new SplashInteractorImpl();
+    IStartInteractor provideStartInteractor(ServiceApi serviceApi) {
+        return new StartInteractorImpl(serviceApi);
     }
 
 }

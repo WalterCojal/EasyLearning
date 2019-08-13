@@ -1,18 +1,27 @@
-package com.walter.cojal.easylearning.domain.splash_interactor;
+package com.walter.cojal.easylearning.domain.start_interactor;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.network.ApiClient;
 import com.walter.cojal.easylearning.network.ServiceApi;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SplashInteractorImpl implements ISplashInteractor{
+public class StartInteractorImpl implements IStartInteractor {
+
+    ServiceApi api;
+
+    @Inject
+    public StartInteractorImpl(ServiceApi api) {
+        this.api = api;
+    }
 
     @Override
-    public void getUpdateData(final UpdateCallBack callBack) {
-        ServiceApi api = ApiClient.client().create(ServiceApi.class);
+    public void updateData(final UpdateCallBack callBack) {
+        api = ApiClient.client().create(ServiceApi.class);
         Call<Result> call = api.getInitData();
         call.enqueue(new Callback<Result>() {
             @Override

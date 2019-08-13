@@ -4,6 +4,7 @@ import com.walter.cojal.easylearning.di.module.PresentationModule;
 import com.walter.cojal.easylearning.di.scope.PerActivity;
 import com.walter.cojal.easylearning.presentation.login.view.LoginActivity;
 import com.walter.cojal.easylearning.presentation.signup.view.SignupActivity;
+import com.walter.cojal.easylearning.presentation.start.view.StartActivity;
 
 import dagger.Component;
 
@@ -13,4 +14,5 @@ import dagger.Component;
 public interface PresentationComponent {
     void inject(LoginActivity loginActivity);
     void inject(SignupActivity signupActivity);
+    void inject(StartActivity startActivity);
 }

@@ -44,7 +44,8 @@ public class SavePreferences {
     public User getUser(String key) {
         String jsonString = sharedPreferences.getString(key, "");
         Gson gson = new Gson();
-        return gson.fromJson(jsonString, User.class);
+        if (jsonString.isEmpty()) return null;
+        else return gson.fromJson(jsonString, User.class);
     }
 
 }

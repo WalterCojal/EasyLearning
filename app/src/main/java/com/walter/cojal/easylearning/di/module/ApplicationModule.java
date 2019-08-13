@@ -1,6 +1,11 @@
 package com.walter.cojal.easylearning.di.module;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+
+import com.squareup.picasso.Picasso;
 import com.walter.cojal.easylearning.utility.Constant;
+import com.walter.cojal.easylearning.utility.SavePreferences;
 
 import javax.inject.Singleton;
 
@@ -11,6 +16,39 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class ApplicationModule {
+
+    Context context;
+
+    public ApplicationModule(Context context) {
+        this.context = context;
+    }
+
+    @Provides
+    @Singleton
+    Context provideContext() {
+        return context.getApplicationContext();
+    }
+
+    @Provides
+    @Singleton
+    Picasso providePicasso(Context context) {
+        return new Picasso.Builder(context).build();
+    }
+
+    @Provides
+    @Singleton
+    SavePreferences provideSavePreference(Context context) {
+        return new SavePreferences(context);
+    }
+
+    @Provides
+    @Singleton
+    ProgressDialog provideProgressDialog(Context context) {
+        ProgressDialog dialog = new ProgressDialog(context);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setCancelable(false);
+        return dialog;
+    }
 
     @Singleton
     @Provides

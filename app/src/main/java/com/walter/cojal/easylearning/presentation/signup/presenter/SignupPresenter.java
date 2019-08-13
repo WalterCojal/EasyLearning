@@ -1,11 +1,18 @@
 package com.walter.cojal.easylearning.presentation.signup.presenter;
 
 import com.walter.cojal.easylearning.data.Entities.User;
+import com.walter.cojal.easylearning.domain.signup_interactor.ISignupInteractor;
 import com.walter.cojal.easylearning.presentation.signup.ISignupContract;
+
+import javax.inject.Inject;
 
 public class SignupPresenter implements ISignupContract.IPresenter {
 
-    public SignupPresenter() {
+    ISignupInteractor interactor;
+
+    @Inject
+    public SignupPresenter(ISignupInteractor interactor) {
+        this.interactor = interactor;
     }
 
     @Override
