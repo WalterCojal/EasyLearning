@@ -1,14 +1,19 @@
 package com.walter.cojal.easylearning.presentation.login.presenter;
 
-import com.walter.cojal.easylearning.data.Entities.User;
+import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.domain.login_interactor.ILoginInteractor;
 import com.walter.cojal.easylearning.presentation.login.ILoginContract;
+
 import javax.inject.Inject;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class LoginPresenter implements ILoginContract.IPresenter {
 
     private final ILoginInteractor interactor;
     ILoginContract.IView view;
+    Disposable disposable;
 
     @Inject
     public LoginPresenter(ILoginInteractor interactor) {
@@ -32,30 +37,37 @@ public class LoginPresenter implements ILoginContract.IPresenter {
 
     @Override
     public void login(String email, String password, String token) {
-        if (!isViewAttached()) {
-            return;
-        }
-        if (!view.validate()) {
-            return;
-        }
-
+        if (!view.validate()) return;
         view.showProgress();
-        interactor.login(email, password, token, new ILoginInteractor.LoginCallback() {
+        interactor.login(email, password, token).subscribe(new Observer<Result>() {
             @Override
-            public void onSuccess(User user) {
-                view.loginSuccess(user);
+            public void onSubscribe(Disposable d) {
+                disposable = d;
             }
 
             @Override
-            public void onLoginError(String message, int status) {
-                view.hideProgress();
-                view.loginError(message, status);
+            public void onNext(Result result) {
+                if (isViewAttached()) {
+                    view.hideProgress();
+                    if (result.isSuccess()) {
+                        view.loginSuccess(result.getUser());
+                    } else {
+                        view.loginError(result.getMessage(), result.getCode());
+                    }
+                }
             }
 
             @Override
-            public void onError(String error) {
-                view.hideProgress();
-                view.showError(error);
+            public void onError(Throwable e) {
+                if (isViewAttached()) {
+                    view.hideProgress();
+                    view.showError(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
 

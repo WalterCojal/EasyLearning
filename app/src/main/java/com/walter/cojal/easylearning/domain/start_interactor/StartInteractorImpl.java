@@ -1,47 +1,31 @@
 package com.walter.cojal.easylearning.domain.start_interactor;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
-import com.walter.cojal.easylearning.network.ApiClient;
 import com.walter.cojal.easylearning.network.ServiceApi;
 
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 
 public class StartInteractorImpl implements IStartInteractor {
 
-    ServiceApi api;
+    private ServiceApi api;
+    private Scheduler uiThread;
+    private Scheduler executorScheduler;
 
     @Inject
-    public StartInteractorImpl(ServiceApi api) {
+    public StartInteractorImpl(ServiceApi api, Scheduler uiThread, Scheduler executorScheduler) {
         this.api = api;
+        this.uiThread = uiThread;
+        this.executorScheduler = executorScheduler;
     }
 
     @Override
-    public void updateData(final UpdateCallBack callBack) {
-        api = ApiClient.client().create(ServiceApi.class);
-        Call<Result> call = api.getInitData();
-        call.enqueue(new Callback<Result>() {
-            @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
-                if (response.isSuccessful()) {
-                    Result result = response.body();
-                    if (result != null && result.isSuccess()) {
-                        callBack.onSuccess(result.getCode());
-                    } else {
-                        callBack.onError(result.getMessage());
-                    }
-                } else {
-                    callBack.onError("Code: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Result> call, Throwable t) {
-                callBack.onError(t.getLocalizedMessage());
-            }
-        });
+    public Observable<Result> updateData() {
+        return api.getInitData()
+                .observeOn(uiThread)
+                .subscribeOn(executorScheduler);
     }
+
 }

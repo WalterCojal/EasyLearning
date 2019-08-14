@@ -14,5 +14,6 @@
 
     <string name="FACEBOOK_APP_ID">1311989565578420</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">014926972a83f6b8b9b67f5d7c29bc05</string>
+    <string name="create_account">Crear cuenta</string>
 
 </resources>

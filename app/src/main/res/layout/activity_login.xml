@@ -65,6 +65,19 @@
         android:text="@string/signin"
         android:textColor="@color/contrastText"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/login_signup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/login_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/easy_32"
+        android:layout_margin="@dimen/easy_2"
+        android:background="@android:color/transparent"
+        android:text="@string/create_account"
+        android:textColor="@color/contrastText"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

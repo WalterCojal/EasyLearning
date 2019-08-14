@@ -12,6 +12,7 @@ public interface ILoginContract {
         void loginSuccess(User user);
         void loginError(String message, int status);
         void goToDashboard();
+        void goToSignup();
         void accountKitLogin();
     }
 

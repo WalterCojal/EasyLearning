@@ -27,6 +27,7 @@ import com.walter.cojal.easylearning.di.module.PresentationModule;
 import com.walter.cojal.easylearning.presentation.home.view.HomeActivity;
 import com.walter.cojal.easylearning.presentation.login.ILoginContract;
 import com.walter.cojal.easylearning.presentation.login.presenter.LoginPresenter;
+import com.walter.cojal.easylearning.presentation.signup.view.SignupActivity;
 import com.walter.cojal.easylearning.utility.Constant;
 import com.walter.cojal.easylearning.utility.SavePreferences;
 import com.walter.cojal.easylearning.utility.Util;
@@ -35,7 +36,7 @@ import javax.inject.Inject;
 
 public class LoginActivity extends BaseActivity implements ILoginContract.IView {
 
-    Button signin;
+    Button signin, signup;
     EditText txtEmail, txtPassword;
     LoginStatusFragment statusFragment;
     public static int APP_REQUEST_CODE = 99;
@@ -65,6 +66,13 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
             public void onClick(View v) {
                 // presenter.login(txtEmail.getText().toString(), txtPassword.getText().toString(), "");
                 goToDashboard();
+            }
+        });
+        signup = findViewById(R.id.login_signup);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSignup();
             }
         });
         presenter.attachView(this);
@@ -186,6 +194,13 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
     @Override
     public void goToDashboard() {
         Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void goToSignup() {
+        Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
     }
 

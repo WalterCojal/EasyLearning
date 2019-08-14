@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.squareup.picasso.Picasso;
+import com.walter.cojal.easylearning.di.scope.Qualifiers;
 import com.walter.cojal.easylearning.utility.Constant;
 import com.walter.cojal.easylearning.utility.SavePreferences;
 
@@ -11,6 +12,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -63,6 +67,18 @@ public class ApplicationModule {
                 .baseUrl(Constant.BASE_URL)
                 .addConverterFactory(converterFactory)
                 .build();
+    }
+
+    @Qualifiers.UiThread
+    @Provides
+    Scheduler provideUiThread() {
+        return AndroidSchedulers.mainThread();
+    }
+
+    @Qualifiers.ExecutorThread
+    @Provides
+    Scheduler provideExecutorThread() {
+        return Schedulers.io();
     }
 
 }

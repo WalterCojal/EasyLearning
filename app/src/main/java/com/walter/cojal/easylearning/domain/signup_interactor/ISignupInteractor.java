@@ -1,15 +1,12 @@
 package com.walter.cojal.easylearning.domain.signup_interactor;
 
+import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.data.Entities.User;
+
+import io.reactivex.Observable;
 
 public interface ISignupInteractor {
 
-    interface SignupCallback {
-        void onSuccess(String message);
-        void onSignError(String message, int status);
-        void onError(String error);
-    }
-
-    void signUp(User user, SignupCallback callback);
+    Observable<Result> signUp(User user);
 
 }

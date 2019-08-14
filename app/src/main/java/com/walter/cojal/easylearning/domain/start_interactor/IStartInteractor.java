@@ -1,12 +1,11 @@
 package com.walter.cojal.easylearning.domain.start_interactor;
 
+import com.walter.cojal.easylearning.data.Entities.Result;
+
+import io.reactivex.Observable;
+
 public interface IStartInteractor {
 
-    interface UpdateCallBack {
-        void onSuccess(int code);
-        void onError(String errorMsg);
-    }
-
-    void updateData(UpdateCallBack callBack);
+    Observable<Result> updateData();
 
 }

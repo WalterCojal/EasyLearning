@@ -1,14 +1,19 @@
 package com.walter.cojal.easylearning.presentation.start.presenter;
 
+import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.domain.start_interactor.IStartInteractor;
 import com.walter.cojal.easylearning.presentation.start.IStartContract;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+
 public class StartPresenter implements IStartContract.IPresenter {
 
     IStartInteractor interactor;
     IStartContract.IView view;
+    private Disposable disposable;
 
     @Inject
     public StartPresenter(IStartInteractor interactor) {
@@ -23,6 +28,9 @@ public class StartPresenter implements IStartContract.IPresenter {
     @Override
     public void dettachView() {
         view = null;
+        if (disposable != null) {
+            disposable.dispose();
+        }
     }
 
     @Override
@@ -32,17 +40,33 @@ public class StartPresenter implements IStartContract.IPresenter {
 
     @Override
     public void update() {
-        interactor.updateData(new IStartInteractor.UpdateCallBack() {
+        interactor.updateData().subscribe(new Observer<Result>() {
             @Override
-            public void onSuccess(int code) {
+            public void onSubscribe(Disposable d) {
+                disposable = d;
+            }
+
+            @Override
+            public void onNext(Result result) {
                 if (isViewAttached()) {
-                    view.updateSuccess(code);
+                    if (result.isSuccess()) {
+                        view.updateSuccess(result.getCode());
+                    } else {
+                        view.showError(result.getMessage());
+                    }
                 }
             }
 
             @Override
-            public void onError(String errorMsg) {
-                view.showError(errorMsg);
+            public void onError(Throwable e) {
+                if (isViewAttached()) {
+                    view.showError(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }
