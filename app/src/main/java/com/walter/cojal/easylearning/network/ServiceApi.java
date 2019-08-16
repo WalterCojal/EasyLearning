@@ -34,4 +34,7 @@ public interface ServiceApi {
     @FormUrlEncoded
     Observable<Result> validatePhone(@Field("phone") String phone);
 
+    @GET("getHomeData")
+    Observable<Result> getHomeData();
+
 }

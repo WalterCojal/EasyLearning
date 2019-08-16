@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.base.BaseActivity;
+import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
+import com.walter.cojal.easylearning.di.module.PresentationModule;
 import com.walter.cojal.easylearning.presentation.signup.ISignupContract;
 import com.walter.cojal.easylearning.presentation.signup.presenter.SignupPresenter;
 
@@ -33,7 +35,10 @@ public class SignupActivity extends BaseActivity implements ISignupContract.IVie
 
     @Override
     protected void resolveDaggerDependency() {
-
+        DaggerPresentationComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .presentationModule(new PresentationModule(this))
+                .build().inject(this);
     }
 
     @Override

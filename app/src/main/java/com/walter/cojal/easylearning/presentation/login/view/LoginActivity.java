@@ -82,7 +82,7 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
     protected void resolveDaggerDependency() {
         DaggerPresentationComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .presentationModule(new PresentationModule())
+                .presentationModule(new PresentationModule(this))
                 .build().inject(this);
     }
 

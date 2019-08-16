@@ -45,15 +45,6 @@ public class ApplicationModule {
         return new SavePreferences(context);
     }
 
-    @Provides
-    @Singleton
-    ProgressDialog provideProgressDialog(Context context) {
-        ProgressDialog dialog = new ProgressDialog(context);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setCancelable(false);
-        return dialog;
-    }
-
     @Singleton
     @Provides
     GsonConverterFactory provideGsonConverterFactory() {
