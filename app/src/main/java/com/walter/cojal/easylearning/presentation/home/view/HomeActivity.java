@@ -3,6 +3,7 @@ package com.walter.cojal.easylearning.presentation.home.view;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
@@ -40,11 +41,6 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
     private static final String FRAGMENT_TAG_FAVORITE = "Favorite";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     protected int getContentView() {
         return R.layout.activity_home;
     }
@@ -60,12 +56,14 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
     @Override
     protected void onViewReady(Bundle saveInstanceState, Intent intent) {
         super.onViewReady(saveInstanceState, intent);
+        getWindow().setBackgroundDrawable(null);
         toolbar = findViewById(R.id.home_toolbar);
         frameLayout = findViewById(R.id.home_fragment);
         bottomNavigationView = findViewById(R.id.home_navbottom);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Inicio");
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationListener);
+        bottomNavigationView.setOnNavigationItemReselectedListener(navigationItemReselectedListener);
         if (saveInstanceState != null) {
             tagShowed = saveInstanceState.getString("fragment");
             switch (tagShowed) {
@@ -73,6 +71,7 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
             }
         }
         user = new User(1, "walter", "cojal", "walter.cojal@gmail.com", "991988248", "28/04/1991", "28", "pass", "token");
+        showHomeFragment();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -92,6 +91,13 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
                     return false;
             }
             return true;
+        }
+    };
+
+    private BottomNavigationView.OnNavigationItemReselectedListener navigationItemReselectedListener = new BottomNavigationView.OnNavigationItemReselectedListener() {
+        @Override
+        public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
+            Log.i(getLocalClassName(), tagShowed + "Reselected");
         }
     };
 

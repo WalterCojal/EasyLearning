@@ -38,6 +38,7 @@
             android:theme="@style/AppThemeBase" />
         <activity
             android:name=".presentation.home.view.HomeActivity"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/AppThemeBase">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -47,6 +48,7 @@
         </activity>
         <activity
             android:name=".presentation.login.view.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.base.BaseFragment;
@@ -30,14 +33,11 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IVie
     @Inject
     FragHomePresenter presenter;
     User user;
+    private RecyclerView asesors;
+    private AsesorAdapter asesorAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -57,7 +57,14 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IVie
     protected void onViewReady(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewReady(view, savedInstanceState);
         presenter.attachView(this);
-
+        asesorAdapter = new AsesorAdapter();
+        asesors = view.findViewById(R.id.f_home_items);
+        asesors.setLayoutManager(new LinearLayoutManager(getActivity()));
+        asesors.setItemAnimator(new DefaultItemAnimator());
+        asesors.setAdapter(asesorAdapter);
+        ArrayList<Asesor> items = new ArrayList<>();
+        items.add(new Asesor(1, "Richard", "Guevara", "mail", "991988248", 55));
+        getDataSuccess(items);
     }
 
     @Override
@@ -77,7 +84,8 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IVie
 
     @Override
     public void getDataSuccess(ArrayList<Asesor> items) {
-
+        asesorAdapter.setItems(items);
+        asesorAdapter.notifyDataSetChanged();
     }
 
     public void setUser(User user) {
