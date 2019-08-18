@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.base.BaseFragment;
 import com.walter.cojal.easylearning.data.Entities.Asesor;
+import com.walter.cojal.easylearning.data.Entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
 import com.walter.cojal.easylearning.presentation.home.fragmentHome.IFragHomeContract;
@@ -28,6 +29,7 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IVie
     ProgressDialog progressDialog;
     @Inject
     FragHomePresenter presenter;
+    User user;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -55,6 +57,7 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IVie
     protected void onViewReady(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewReady(view, savedInstanceState);
         presenter.attachView(this);
+
     }
 
     @Override
@@ -75,5 +78,9 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IVie
     @Override
     public void getDataSuccess(ArrayList<Asesor> items) {
 
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

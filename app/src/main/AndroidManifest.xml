@@ -18,7 +18,7 @@
         <activity
             android:name=".presentation.start.view.StartActivity"
             android:theme="@style/AppThemeSplash"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity android:name=".base.BaseActivity" />
 
         <meta-data
@@ -38,7 +38,6 @@
             android:theme="@style/AppThemeBase" />
         <activity
             android:name=".presentation.home.view.HomeActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBase">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

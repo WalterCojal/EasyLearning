@@ -16,4 +16,5 @@
     <color name="colorFacebook">#4169E1</color>
     <color name="colorFacebookLight">#7896EC</color>
     <color name="togglePassword">#1168A2</color>
+    <color name="navigation_backgorund">#A5A5A5</color>
 </resources>

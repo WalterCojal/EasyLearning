@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.base.BaseActivity;
+import com.walter.cojal.easylearning.data.Entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
 import com.walter.cojal.easylearning.presentation.home.IHomeContract;
@@ -31,8 +32,9 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
     ProgressDialog progressDialog;
     @Inject
     IHomeContract.IPresenter presenter;
-    String tagShowed = "";
     FragmentTransaction fragmentTransaction;
+    User user;
+    String tagShowed = "";
     private static final String FRAGMENT_TAG_HOME = "Home";
     private static final String FRAGMENT_TAG_PROFILE = "Profile";
     private static final String FRAGMENT_TAG_FAVORITE = "Favorite";
@@ -70,6 +72,7 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
                 case FRAGMENT_TAG_HOME: homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(tagShowed);
             }
         }
+        user = new User(1, "walter", "cojal", "walter.cojal@gmail.com", "991988248", "28/04/1991", "28", "pass", "token");
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -118,6 +121,8 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
 
     @Override
     public void showHomeFragment() {
+        homeFragment.setUser(user);
+        homeFragment.setRetainInstance(true);
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_fragment, homeFragment, FRAGMENT_TAG_HOME);
         fragmentTransaction.commitAllowingStateLoss();

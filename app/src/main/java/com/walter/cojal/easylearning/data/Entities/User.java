@@ -5,7 +5,6 @@ public class User {
     private int id;
     private String name;
     private String lastName;
-    private String surName;
     private String email;
     private String phone;
     private String birthDate;
@@ -13,11 +12,10 @@ public class User {
     private String password;
     private String token;
 
-    public User(int id, String name, String lastName, String surName, String email, String phone, String birthDate, String age, String password, String token) {
+    public User(int id, String name, String lastName, String email, String phone, String birthDate, String age, String password, String token) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
-        this.surName = surName;
         this.email = email;
         this.phone = phone;
         this.birthDate = birthDate;
@@ -48,14 +46,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getSurName() {
-        return surName;
-    }
-
-    public void setSurName(String surName) {
-        this.surName = surName;
     }
 
     public String getEmail() {
