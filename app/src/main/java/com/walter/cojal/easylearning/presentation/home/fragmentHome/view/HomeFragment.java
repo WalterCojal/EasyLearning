@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.base.BaseFragment;
@@ -23,9 +22,6 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HomeFragment extends BaseFragment implements IFragHomeContract.IView {
 
     @Inject

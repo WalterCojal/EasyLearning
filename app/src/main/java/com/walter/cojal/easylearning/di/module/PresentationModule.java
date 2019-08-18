@@ -15,6 +15,7 @@ import com.walter.cojal.easylearning.domain.start_interactor.IStartInteractor;
 import com.walter.cojal.easylearning.domain.start_interactor.StartInteractorImpl;
 import com.walter.cojal.easylearning.network.ServiceApi;
 import com.walter.cojal.easylearning.presentation.home.IHomeContract;
+import com.walter.cojal.easylearning.presentation.home.fragmentHome.view.HomeFragment;
 import com.walter.cojal.easylearning.presentation.home.presenter.HomePresenter;
 
 import dagger.Module;
@@ -82,6 +83,11 @@ public class PresentationModule {
                                                   @Qualifiers.UiThread Scheduler uiThread,
                                                   @Qualifiers.ExecutorThread Scheduler executorThread) {
         return new FragHomeInteractorImpl(serviceApi, uiThread, executorThread);
+    }
+
+    @Provides
+    HomeFragment provideHomeFragment() {
+        return new HomeFragment();
     }
 
 }

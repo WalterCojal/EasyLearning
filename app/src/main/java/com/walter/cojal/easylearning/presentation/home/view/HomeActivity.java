@@ -8,11 +8,15 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.base.BaseActivity;
+import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
+import com.walter.cojal.easylearning.di.module.PresentationModule;
 import com.walter.cojal.easylearning.presentation.home.IHomeContract;
+import com.walter.cojal.easylearning.presentation.home.fragmentHome.view.HomeFragment;
 
 import javax.inject.Inject;
 
@@ -20,11 +24,18 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
 
     private Toolbar toolbar;
     private FrameLayout frameLayout;
+    @Inject
+    HomeFragment homeFragment;
     private BottomNavigationView bottomNavigationView;
     @Inject
     ProgressDialog progressDialog;
     @Inject
     IHomeContract.IPresenter presenter;
+    String tagShowed = "";
+    FragmentTransaction fragmentTransaction;
+    private static final String FRAGMENT_TAG_HOME = "Home";
+    private static final String FRAGMENT_TAG_PROFILE = "Profile";
+    private static final String FRAGMENT_TAG_FAVORITE = "Favorite";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +49,10 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
 
     @Override
     protected void resolveDaggerDependency() {
-
+        DaggerPresentationComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .presentationModule(new PresentationModule(this))
+                .build().inject(this);
     }
 
     @Override
@@ -50,6 +64,12 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Inicio");
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationListener);
+        if (saveInstanceState != null) {
+            tagShowed = saveInstanceState.getString("fragment");
+            switch (tagShowed) {
+                case FRAGMENT_TAG_HOME: homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(tagShowed);
+            }
+        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -73,6 +93,12 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
     };
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("fragment", tagShowed);
+    }
+
+    @Override
     public void showProgress() {
         progressDialog.setMessage("Espere...");
         progressDialog.show();
@@ -92,7 +118,10 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
 
     @Override
     public void showHomeFragment() {
-
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.home_fragment, homeFragment, FRAGMENT_TAG_HOME);
+        fragmentTransaction.commitAllowingStateLoss();
+        tagShowed = FRAGMENT_TAG_HOME;
     }
 
     @Override
