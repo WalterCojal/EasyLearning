@@ -17,6 +17,10 @@ import com.walter.cojal.easylearning.network.ServiceApi;
 import com.walter.cojal.easylearning.presentation.home.IHomeContract;
 import com.walter.cojal.easylearning.presentation.home.fragmentHome.view.HomeFragment;
 import com.walter.cojal.easylearning.presentation.home.presenter.HomePresenter;
+import com.walter.cojal.easylearning.repository.auth.IAuthRepository;
+import com.walter.cojal.easylearning.repository.auth.RetrofitAuthRepositoryImpl;
+import com.walter.cojal.easylearning.repository.user.IUserRepository;
+import com.walter.cojal.easylearning.repository.user.RetrofitUserRepositoryImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -49,11 +53,17 @@ public class PresentationModule {
     }
 
     // ============================================ Login ============================================ //
+
     @Provides
-    ILoginInteractor provideLoginInteractor(ServiceApi serviceApi,
-                                            @Qualifiers.UiThread Scheduler uiThread,
-                                            @Qualifiers.ExecutorThread Scheduler executorThrea) {
-        return new LoginInteractorImpl(serviceApi, uiThread, executorThrea);
+    IAuthRepository provideAuthRepository(ServiceApi serviceApi,
+                                          @Qualifiers.UiThread Scheduler uiThread,
+                                          @Qualifiers.ExecutorThread Scheduler executorThrea) {
+        return new RetrofitAuthRepositoryImpl(serviceApi, uiThread, executorThrea);
+    }
+
+    @Provides
+    ILoginInteractor provideLoginInteractor(IAuthRepository authRepository) {
+        return new LoginInteractorImpl(authRepository);
     }
 
     // ============================================ Signup ============================================ //
@@ -62,6 +72,11 @@ public class PresentationModule {
                                               @Qualifiers.UiThread Scheduler uiThread,
                                               @Qualifiers.ExecutorThread Scheduler executorThread) {
         return new SignupInteractorImpl(serviceApi, uiThread, executorThread);
+    }
+
+    @Provides
+    IUserRepository provideUserRepository() {
+        return new RetrofitUserRepositoryImpl();
     }
 
     // ============================================ Start ============================================ //

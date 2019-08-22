@@ -5,7 +5,7 @@ import com.walter.cojal.easylearning.data.Entities.User;
 
 import io.reactivex.Observable;
 
-public class UserRepositoryImpl implements IUserRepository {
+public class RetrofitUserRepositoryImpl implements IUserRepository {
 
     @Override
     public Observable<Result> create(User user) {
