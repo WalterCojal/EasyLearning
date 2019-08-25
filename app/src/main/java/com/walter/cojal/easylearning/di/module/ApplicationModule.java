@@ -1,8 +1,8 @@
 package com.walter.cojal.easylearning.di.module;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.picasso.Picasso;
 import com.walter.cojal.easylearning.di.scope.Qualifiers;
 import com.walter.cojal.easylearning.utility.Constant;
@@ -53,10 +53,17 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit(GsonConverterFactory converterFactory) {
+    RxJava2CallAdapterFactory provideRxJava2CallAdapterFactory() {
+        return RxJava2CallAdapterFactory.create();
+    }
+
+    @Singleton
+    @Provides
+    Retrofit provideRetrofit(GsonConverterFactory converterFactory, RxJava2CallAdapterFactory adapterFactory) {
         return new Retrofit.Builder()
                 .baseUrl(Constant.BASE_URL)
                 .addConverterFactory(converterFactory)
+                .addCallAdapterFactory(adapterFactory)
                 .build();
     }
 

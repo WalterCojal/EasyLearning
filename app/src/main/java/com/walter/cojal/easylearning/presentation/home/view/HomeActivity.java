@@ -70,7 +70,6 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IView {
                 case FRAGMENT_TAG_HOME: homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(tagShowed);
             }
         }
-        user = new User(1, "walter", "cojal", "walter.cojal@gmail.com", "991988248", "28/04/1991", "28", "pass", "token");
         showHomeFragment();
     }
 

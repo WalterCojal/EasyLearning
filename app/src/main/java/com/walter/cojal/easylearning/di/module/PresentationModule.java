@@ -68,15 +68,15 @@ public class PresentationModule {
 
     // ============================================ Signup ============================================ //
     @Provides
-    ISignupInteractor provideSignupInteractor(ServiceApi serviceApi,
-                                              @Qualifiers.UiThread Scheduler uiThread,
-                                              @Qualifiers.ExecutorThread Scheduler executorThread) {
-        return new SignupInteractorImpl(serviceApi, uiThread, executorThread);
+    ISignupInteractor provideSignupInteractor(IUserRepository userRepository) {
+        return new SignupInteractorImpl(userRepository);
     }
 
     @Provides
-    IUserRepository provideUserRepository() {
-        return new RetrofitUserRepositoryImpl();
+    IUserRepository provideUserRepository(ServiceApi serviceApi,
+                                          @Qualifiers.UiThread Scheduler uiThread,
+                                          @Qualifiers.ExecutorThread Scheduler executorThread) {
+        return new RetrofitUserRepositoryImpl(serviceApi, uiThread, executorThread);
     }
 
     // ============================================ Start ============================================ //

@@ -1,18 +1,34 @@
 package com.walter.cojal.easylearning.data.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
 
     private int id;
     private String name;
+    @SerializedName("last_name")
     private String lastName;
     private String email;
     private String phone;
+    @SerializedName("birth_date")
     private String birthDate;
-    private String age;
+    private int age;
     private String password;
     private String token;
 
-    public User(int id, String name, String lastName, String email, String phone, String birthDate, String age, String password, String token) {
+    public User(int id) {
+        this.id = id;
+        this.name = "";
+        this.lastName = "";
+        this.email = "";
+        this.phone = "";
+        this.birthDate = "";
+        this.age = 0;
+        this.password = "";
+        this.token = "";
+    }
+
+    public User(int id, String name, String lastName, String email, String phone, String birthDate, int age, String password, String token) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -72,11 +88,11 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

@@ -64,8 +64,8 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // presenter.login(txtEmail.getText().toString(), txtPassword.getText().toString(), "");
-                goToDashboard();
+                presenter.login(txtEmail.getText().toString(), txtPassword.getText().toString(), "");
+
             }
         });
         signup = findViewById(R.id.login_signup);

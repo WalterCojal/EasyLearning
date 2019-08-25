@@ -22,7 +22,7 @@ public interface ServiceApi {
                        @Field("password") String password,
                        @Field("token") String token);
 
-    @POST("signup")
+    @POST("register")
     @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
     Observable<Result> signup(@Body User user);
 

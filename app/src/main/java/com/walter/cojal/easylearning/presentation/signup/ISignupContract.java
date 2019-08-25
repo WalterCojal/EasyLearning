@@ -8,16 +8,19 @@ public interface ISignupContract {
         void showProgress();
         void hideProgress();
         void showError(String error);
-        void signupSuccess(String message);
-        void signupError(String message, int code);
-        void validate();
+        void signUpSuccess(String message);
+        void signUpError(String message, int code);
+        Boolean validate();
+        void goToLogin();
+        void setupViews();
+        void setupListeners();
     }
 
     interface IPresenter {
         void attachView(IView view);
-        void dettachView();
+        void detachView();
         Boolean isViewAttached();
-        void signup(User user);
+        void signUp(User user);
     }
 
 }

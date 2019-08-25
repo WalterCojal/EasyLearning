@@ -27,7 +27,7 @@ public class SignupPresenter implements ISignupContract.IPresenter {
     }
 
     @Override
-    public void dettachView() {
+    public void detachView() {
         view = null;
         if (disposable != null) {
             disposable.dispose();
@@ -40,7 +40,10 @@ public class SignupPresenter implements ISignupContract.IPresenter {
     }
 
     @Override
-    public void signup(User user) {
+    public void signUp(User user) {
+
+        if (!view.validate()) return;
+
         view.showProgress();
         interactor.signUp(user).subscribe(new Observer<Result>() {
             @Override
@@ -53,9 +56,9 @@ public class SignupPresenter implements ISignupContract.IPresenter {
                 if (isViewAttached()) {
                     view.hideProgress();
                     if (result.isSuccess()) {
-                        view.signupSuccess(result.getMessage());
+                        view.signUpSuccess(result.getMessage());
                     } else {
-                        view.signupError(result.getMessage(), result.getCode());
+                        view.signUpError(result.getMessage(), result.getCode());
                     }
                 }
             }
