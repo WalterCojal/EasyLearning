@@ -1,4 +1,4 @@
-package com.walter.cojal.easylearning.repository.auth;
+package com.walter.cojal.easylearning.data.repository.auth;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
 

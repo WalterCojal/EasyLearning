@@ -2,23 +2,30 @@ package com.walter.cojal.easylearning.domain.signup_interactor;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.data.Entities.User;
-import com.walter.cojal.easylearning.repository.user.IUserRepository;
+import com.walter.cojal.easylearning.data.repository.user.IRetrofitUserRepository;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 
 public class SignupInteractorImpl implements ISignupInteractor {
 
-    IUserRepository userRepository;
+    IRetrofitUserRepository userRepository;
+    Scheduler uiThread;
+    Scheduler executorThread;
 
     @Inject
-    public SignupInteractorImpl(IUserRepository userRepository) {
+    public SignupInteractorImpl(IRetrofitUserRepository userRepository, Scheduler uiThread, Scheduler executorThread) {
         this.userRepository = userRepository;
+        this.uiThread = uiThread;
+        this.executorThread = executorThread;
     }
 
     @Override
     public Observable<Result> signUp(User user) {
-        return userRepository.create(user);
+        return userRepository.create(user)
+                .observeOn(uiThread)
+                .subscribeOn(executorThread);
     }
 }

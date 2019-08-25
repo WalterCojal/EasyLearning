@@ -1,4 +1,4 @@
-package com.walter.cojal.easylearning.repository.auth;
+package com.walter.cojal.easylearning.data.repository.auth;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.network.ServiceApi;
@@ -6,26 +6,19 @@ import com.walter.cojal.easylearning.network.ServiceApi;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 
 public class RetrofitAuthRepositoryImpl implements IAuthRepository {
 
     ServiceApi serviceApi;
-    Scheduler uiThread;
-    Scheduler executorThread;
 
     @Inject
-    public RetrofitAuthRepositoryImpl(ServiceApi serviceApi, Scheduler uiThread, Scheduler executorThread) {
+    public RetrofitAuthRepositoryImpl(ServiceApi serviceApi) {
         this.serviceApi = serviceApi;
-        this.uiThread = uiThread;
-        this.executorThread = executorThread;
     }
 
     @Override
     public Observable<Result> login(String email, String password, String token) {
-        return serviceApi.login(email, password, token)
-                .observeOn(uiThread)
-                .subscribeOn(executorThread);
+        return serviceApi.login(email, password, token);
     }
 
     @Override
@@ -40,8 +33,6 @@ public class RetrofitAuthRepositoryImpl implements IAuthRepository {
 
     @Override
     public Observable<Result> validatePhone(String phone) {
-        return serviceApi.validatePhone(phone)
-                .observeOn(uiThread)
-                .subscribeOn(executorThread);
+        return serviceApi.validatePhone(phone);
     }
 }

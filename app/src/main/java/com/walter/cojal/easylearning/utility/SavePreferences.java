@@ -48,4 +48,16 @@ public class SavePreferences {
         else return gson.fromJson(jsonString, User.class);
     }
 
+    public Boolean existsPreference(String key) {
+        return sharedPreferences.contains(key);
+    }
+
+    public void removePreference(String key) {
+        sharedPreferences.edit().remove(key).apply();
+    }
+
+    public void clearPreferences() {
+        sharedPreferences.edit().clear().apply();
+    }
+
 }

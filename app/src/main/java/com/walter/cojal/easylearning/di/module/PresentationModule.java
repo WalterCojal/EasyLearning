@@ -3,6 +3,10 @@ package com.walter.cojal.easylearning.di.module;
 import android.app.Activity;
 import android.app.ProgressDialog;
 
+import com.walter.cojal.easylearning.data.repository.auth.IAuthRepository;
+import com.walter.cojal.easylearning.data.repository.auth.RetrofitAuthRepositoryImpl;
+import com.walter.cojal.easylearning.data.repository.user.IRetrofitUserRepository;
+import com.walter.cojal.easylearning.data.repository.user.RetrofitRetrofitUserRepositoryImpl;
 import com.walter.cojal.easylearning.di.scope.PerActivity;
 import com.walter.cojal.easylearning.di.scope.Qualifiers;
 import com.walter.cojal.easylearning.domain.home_interactor.frag_home_interactor.FragHomeInteractorImpl;
@@ -17,15 +21,10 @@ import com.walter.cojal.easylearning.network.ServiceApi;
 import com.walter.cojal.easylearning.presentation.home.IHomeContract;
 import com.walter.cojal.easylearning.presentation.home.fragmentHome.view.HomeFragment;
 import com.walter.cojal.easylearning.presentation.home.presenter.HomePresenter;
-import com.walter.cojal.easylearning.repository.auth.IAuthRepository;
-import com.walter.cojal.easylearning.repository.auth.RetrofitAuthRepositoryImpl;
-import com.walter.cojal.easylearning.repository.user.IUserRepository;
-import com.walter.cojal.easylearning.repository.user.RetrofitUserRepositoryImpl;
 
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Scheduler;
-import retrofit2.Retrofit;
 
 @Module
 public class PresentationModule {
@@ -46,37 +45,33 @@ public class PresentationModule {
         return progressDialog;
     }
 
-    @PerActivity
-    @Provides
-    ServiceApi provideServiceApi(Retrofit retrofit) {
-        return retrofit.create(ServiceApi.class);
-    }
-
     // ============================================ Login ============================================ //
 
     @Provides
-    IAuthRepository provideAuthRepository(ServiceApi serviceApi,
-                                          @Qualifiers.UiThread Scheduler uiThread,
-                                          @Qualifiers.ExecutorThread Scheduler executorThrea) {
-        return new RetrofitAuthRepositoryImpl(serviceApi, uiThread, executorThrea);
+    IAuthRepository provideAuthRepository(ServiceApi serviceApi) {
+        return new RetrofitAuthRepositoryImpl(serviceApi);
     }
 
     @Provides
-    ILoginInteractor provideLoginInteractor(IAuthRepository authRepository) {
-        return new LoginInteractorImpl(authRepository);
+    ILoginInteractor provideLoginInteractor(IAuthRepository authRepository,
+                                            @Qualifiers.UiThread Scheduler uiThread,
+                                            @Qualifiers.ExecutorThread Scheduler executorThread) {
+        return new LoginInteractorImpl(authRepository, uiThread, executorThread);
     }
 
     // ============================================ Signup ============================================ //
     @Provides
-    ISignupInteractor provideSignupInteractor(IUserRepository userRepository) {
-        return new SignupInteractorImpl(userRepository);
+    ISignupInteractor provideSignupInteractor(IRetrofitUserRepository userRepository,
+                                              @Qualifiers.UiThread Scheduler uiThread,
+                                              @Qualifiers.ExecutorThread Scheduler executorThread) {
+        return new SignupInteractorImpl(userRepository, uiThread, executorThread);
     }
 
     @Provides
-    IUserRepository provideUserRepository(ServiceApi serviceApi,
-                                          @Qualifiers.UiThread Scheduler uiThread,
-                                          @Qualifiers.ExecutorThread Scheduler executorThread) {
-        return new RetrofitUserRepositoryImpl(serviceApi, uiThread, executorThread);
+    IRetrofitUserRepository provideUserRepository(ServiceApi serviceApi,
+                                                  @Qualifiers.UiThread Scheduler uiThread,
+                                                  @Qualifiers.ExecutorThread Scheduler executorThread) {
+        return new RetrofitRetrofitUserRepositoryImpl(serviceApi, uiThread, executorThread);
     }
 
     // ============================================ Start ============================================ //

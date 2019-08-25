@@ -1,4 +1,4 @@
-package com.walter.cojal.easylearning.repository.user;
+package com.walter.cojal.easylearning.data.repository.user;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.data.Entities.User;
@@ -9,14 +9,14 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 
-public class RetrofitUserRepositoryImpl implements IUserRepository {
+public class RetrofitRetrofitUserRepositoryImpl implements IRetrofitUserRepository {
 
     ServiceApi serviceApi;
     Scheduler uiThread;
     Scheduler executorThread;
 
     @Inject
-    public RetrofitUserRepositoryImpl(ServiceApi serviceApi, Scheduler uiThread, Scheduler executorThread) {
+    public RetrofitRetrofitUserRepositoryImpl(ServiceApi serviceApi, Scheduler uiThread, Scheduler executorThread) {
         this.serviceApi = serviceApi;
         this.uiThread = uiThread;
         this.executorThread = executorThread;

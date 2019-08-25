@@ -1,11 +1,11 @@
-package com.walter.cojal.easylearning.repository.user;
+package com.walter.cojal.easylearning.data.repository.user;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.data.Entities.User;
 
 import io.reactivex.Observable;
 
-public interface IUserRepository {
+public interface IRetrofitUserRepository {
 
     Observable<Result> create(User user);
     Observable<Result> update(User user);
