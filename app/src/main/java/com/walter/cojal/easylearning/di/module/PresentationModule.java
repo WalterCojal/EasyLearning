@@ -3,9 +3,17 @@ package com.walter.cojal.easylearning.di.module;
 import android.app.Activity;
 import android.app.ProgressDialog;
 
+import com.walter.cojal.easylearning.data.repository.asesor.IPreferenceAsesorRepository;
+import com.walter.cojal.easylearning.data.repository.asesor.IRetrofitAsesorRepository;
+import com.walter.cojal.easylearning.data.repository.asesor.PreferenceAsesorRepositoryImpl;
+import com.walter.cojal.easylearning.data.repository.asesor.RetrofitRetrofitAsesorRepositoryImpl;
 import com.walter.cojal.easylearning.data.repository.auth.IAuthRepository;
+import com.walter.cojal.easylearning.data.repository.auth.IPreferenceAuthRepository;
+import com.walter.cojal.easylearning.data.repository.auth.PreferenceAuthRepositoryImpl;
 import com.walter.cojal.easylearning.data.repository.auth.RetrofitAuthRepositoryImpl;
+import com.walter.cojal.easylearning.data.repository.user.IPreferenceUserRepository;
 import com.walter.cojal.easylearning.data.repository.user.IRetrofitUserRepository;
+import com.walter.cojal.easylearning.data.repository.user.PreferenceUserRepositoryImpl;
 import com.walter.cojal.easylearning.data.repository.user.RetrofitRetrofitUserRepositoryImpl;
 import com.walter.cojal.easylearning.di.scope.PerActivity;
 import com.walter.cojal.easylearning.di.scope.Qualifiers;
@@ -45,12 +53,37 @@ public class PresentationModule {
         return progressDialog;
     }
 
-    // ============================================ Login ============================================ //
-
     @Provides
     IAuthRepository provideAuthRepository(ServiceApi serviceApi) {
         return new RetrofitAuthRepositoryImpl(serviceApi);
     }
+
+    @Provides
+    IPreferenceAuthRepository providePreferenceAuthRepository() {
+        return new PreferenceAuthRepositoryImpl();
+    }
+
+    @Provides
+    IRetrofitUserRepository provideRetrofitUserRepository(ServiceApi serviceApi) {
+        return new RetrofitRetrofitUserRepositoryImpl(serviceApi);
+    }
+
+    @Provides
+    IPreferenceUserRepository providePreferenceUserRepository() {
+        return new PreferenceUserRepositoryImpl();
+    }
+
+    @Provides
+    IPreferenceAsesorRepository providePreferenceAsesorRepository() {
+        return new PreferenceAsesorRepositoryImpl();
+    }
+
+    @Provides
+    IRetrofitAsesorRepository provideRetrofitAsesorRepository(ServiceApi serviceApi) {
+        return new RetrofitRetrofitAsesorRepositoryImpl(serviceApi);
+    }
+
+    // ============================================ Login ============================================ //
 
     @Provides
     ILoginInteractor provideLoginInteractor(IAuthRepository authRepository,
@@ -65,13 +98,6 @@ public class PresentationModule {
                                               @Qualifiers.UiThread Scheduler uiThread,
                                               @Qualifiers.ExecutorThread Scheduler executorThread) {
         return new SignupInteractorImpl(userRepository, uiThread, executorThread);
-    }
-
-    @Provides
-    IRetrofitUserRepository provideUserRepository(ServiceApi serviceApi,
-                                                  @Qualifiers.UiThread Scheduler uiThread,
-                                                  @Qualifiers.ExecutorThread Scheduler executorThread) {
-        return new RetrofitRetrofitUserRepositoryImpl(serviceApi, uiThread, executorThread);
     }
 
     // ============================================ Start ============================================ //

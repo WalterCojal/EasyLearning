@@ -36,7 +36,7 @@ public class StartActivity extends BaseActivity implements IStartContract.IView 
     @Override
     protected void onViewReady(Bundle saveInstanceState, Intent intent) {
         super.onViewReady(saveInstanceState, intent);
-        user = savePreferences.getUser(Constant.USER_KEY);
+        user = savePreferences.getUser(Constant.KEY_USER);
         presenter.attachView(this);
         if (user != null) {
             goToDashboard();

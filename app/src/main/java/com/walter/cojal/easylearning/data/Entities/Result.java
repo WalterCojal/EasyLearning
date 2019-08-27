@@ -1,5 +1,7 @@
 package com.walter.cojal.easylearning.data.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class Result {
@@ -9,6 +11,8 @@ public class Result {
     private User user;
     private int code;
     private ArrayList<Asesor> asesors;
+    @SerializedName("api_token")
+    private String apiToken;
 
     public boolean isSuccess() {
         return success;
@@ -28,5 +32,9 @@ public class Result {
 
     public ArrayList<Asesor> getAsesors() {
         return asesors;
+    }
+
+    public String getApiToken() {
+        return apiToken;
     }
 }

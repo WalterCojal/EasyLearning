@@ -28,8 +28,6 @@ import com.walter.cojal.easylearning.presentation.home.view.HomeActivity;
 import com.walter.cojal.easylearning.presentation.login.ILoginContract;
 import com.walter.cojal.easylearning.presentation.login.presenter.LoginPresenter;
 import com.walter.cojal.easylearning.presentation.signup.view.SignupActivity;
-import com.walter.cojal.easylearning.utility.Constant;
-import com.walter.cojal.easylearning.utility.SavePreferences;
 import com.walter.cojal.easylearning.utility.Util;
 
 import javax.inject.Inject;
@@ -185,9 +183,7 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
     }
 
     @Override
-    public void loginSuccess(User user) {
-        SavePreferences savePreferences = new SavePreferences(this);
-        savePreferences.saveUser(Constant.USER_KEY, user);
+    public void loginSuccess(User user, String apiToken) {
         goToDashboard();
     }
 

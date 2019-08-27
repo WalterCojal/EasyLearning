@@ -9,7 +9,7 @@ public interface ILoginContract {
         void hideProgress();
         void showError(String error);
         Boolean validate();
-        void loginSuccess(User user);
+        void loginSuccess(User user, String apiToken);
         void loginError(String message, int status);
         void goToDashboard();
         void goToSignup();

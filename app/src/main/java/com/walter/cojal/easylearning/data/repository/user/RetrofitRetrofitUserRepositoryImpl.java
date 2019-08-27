@@ -7,26 +7,19 @@ import com.walter.cojal.easylearning.network.ServiceApi;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 
 public class RetrofitRetrofitUserRepositoryImpl implements IRetrofitUserRepository {
 
     ServiceApi serviceApi;
-    Scheduler uiThread;
-    Scheduler executorThread;
 
     @Inject
-    public RetrofitRetrofitUserRepositoryImpl(ServiceApi serviceApi, Scheduler uiThread, Scheduler executorThread) {
+    public RetrofitRetrofitUserRepositoryImpl(ServiceApi serviceApi) {
         this.serviceApi = serviceApi;
-        this.uiThread = uiThread;
-        this.executorThread = executorThread;
     }
 
     @Override
     public Observable<Result> create(User user) {
-        return serviceApi.signup(user)
-                .observeOn(uiThread)
-                .subscribeOn(executorThread);
+        return serviceApi.signup(user);
     }
 
     @Override

@@ -1,33 +1,30 @@
 package com.walter.cojal.easylearning.data.repository.user;
 
 import com.walter.cojal.easylearning.data.Entities.User;
+import com.walter.cojal.easylearning.utility.Constant;
 import com.walter.cojal.easylearning.utility.SavePreferences;
 
 import javax.inject.Inject;
 
 public class PreferenceUserRepositoryImpl implements IPreferenceUserRepository {
 
+    @Inject
     SavePreferences savePreferences;
 
-    @Inject
-    public PreferenceUserRepositoryImpl(SavePreferences savePreferences) {
-        this.savePreferences = savePreferences;
+    @Override
+    public void saveUser(User user) {
+        savePreferences.saveUser(Constant.KEY_USER, user);
     }
 
     @Override
-    public void saveUser(String key, User user) {
-        savePreferences.saveUser(key, user);
+    public User getUser() {
+        return savePreferences.getUser(Constant.KEY_USER);
     }
 
     @Override
-    public User getUser(String key) {
-        return savePreferences.getUser(key);
-    }
-
-    @Override
-    public void deleteUser(String key) {
-        if (savePreferences.existsPreference(key)) {
-            savePreferences.removePreference(key);
+    public void deleteUser() {
+        if (savePreferences.existsPreference(Constant.KEY_USER)) {
+            savePreferences.removePreference(Constant.KEY_USER);
         }
     }
 }
