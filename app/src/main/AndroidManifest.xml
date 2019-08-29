@@ -18,7 +18,13 @@
         <activity
             android:name=".presentation.start.view.StartActivity"
             android:theme="@style/AppThemeSplash"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".base.BaseActivity" />
 
         <meta-data
@@ -37,8 +43,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeBase" />
         <activity
-            android:name=".presentation.home.view.HomeActivity"
-            android:screenOrientation="sensorLandscape"
+            android:name=".presentation.main.view.HomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBase">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -49,13 +55,7 @@
         <activity
             android:name=".presentation.login.view.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeSplash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppThemeSplash"/>
     </application>
 
 </manifest>

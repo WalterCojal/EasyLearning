@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -24,7 +25,7 @@ import com.walter.cojal.easylearning.base.BaseActivity;
 import com.walter.cojal.easylearning.data.Entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
-import com.walter.cojal.easylearning.presentation.home.view.HomeActivity;
+import com.walter.cojal.easylearning.presentation.main.view.HomeActivity;
 import com.walter.cojal.easylearning.presentation.login.ILoginContract;
 import com.walter.cojal.easylearning.presentation.login.presenter.LoginPresenter;
 import com.walter.cojal.easylearning.presentation.signup.view.SignupActivity;
@@ -56,24 +57,9 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
     @Override
     protected void onViewReady(Bundle saveInstanceState, Intent intent) {
         super.onViewReady(saveInstanceState, intent);
-        txtEmail = findViewById(R.id.login_email);
-        txtPassword = findViewById(R.id.login_password);
-        signin = findViewById(R.id.login_main);
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.login(txtEmail.getText().toString(), txtPassword.getText().toString(), "");
-
-            }
-        });
-        signup = findViewById(R.id.login_signup);
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToSignup();
-            }
-        });
         presenter.attachView(this);
+        setupViews();
+        setupListener();
     }
 
     @Override
@@ -82,6 +68,30 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
                 .applicationComponent(getApplicationComponent())
                 .presentationModule(new PresentationModule(this))
                 .build().inject(this);
+    }
+
+    @Override
+    public void setupViews() {
+        txtEmail = findViewById(R.id.login_email);
+        txtPassword = findViewById(R.id.login_password);
+        signin = findViewById(R.id.login_main);
+        signup = findViewById(R.id.login_signup);
+    }
+
+    @Override
+    public void setupListener() {
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.login(txtEmail.getText().toString(), txtPassword.getText().toString(), "");
+            }
+        });
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSignUp();
+            }
+        });
     }
 
     @Override
@@ -99,7 +109,7 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
 
     @Override
     public void showError(String error) {
-
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -109,7 +119,7 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
             txtEmail.requestFocus();
             return false;
         }
-        if (Util.verifyEmail(txtEmail.getText().toString())) {
+        if (!Util.verifyEmail(txtEmail.getText().toString())) {
             txtEmail.setError("Correo electrónico inválido");
             txtEmail.requestFocus();
             return false;
@@ -195,7 +205,7 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
     }
 
     @Override
-    public void goToSignup() {
+    public void goToSignUp() {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
     }
@@ -221,13 +231,13 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
 
     @Override
     public void onDetachedFromWindow() {
-        presenter.dettachView();
+        presenter.detachView();
         super.onDetachedFromWindow();
     }
 
     @Override
     protected void onDestroy() {
-        presenter.dettachView();
+        presenter.detachView();
         super.onDestroy();
     }
 }

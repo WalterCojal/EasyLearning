@@ -1,4 +1,4 @@
-package com.walter.cojal.easylearning.presentation.home.fragmentHome;
+package com.walter.cojal.easylearning.presentation.main.home;
 
 import com.walter.cojal.easylearning.data.Entities.Asesor;
 

@@ -16,26 +16,30 @@ public class LoginInteractorImpl implements ILoginInteractor {
     IAuthRepository authRepository;
     Scheduler uiThread;
     Scheduler executorThread;
-    @Inject
     IPreferenceUserRepository userRepository;
-    @Inject
     IPreferenceAuthRepository preferenceAuthRepository;
 
     @Inject
-    public LoginInteractorImpl(IAuthRepository authRepository, Scheduler uiThread, Scheduler executorThread) {
+    public LoginInteractorImpl(IAuthRepository authRepository, Scheduler uiThread, Scheduler executorThread, IPreferenceUserRepository userRepository, IPreferenceAuthRepository preferenceAuthRepository) {
         this.authRepository = authRepository;
         this.uiThread = uiThread;
         this.executorThread = executorThread;
+        this.userRepository = userRepository;
+        this.preferenceAuthRepository = preferenceAuthRepository;
     }
 
     @Override
     public Observable<Result> login(String email, String password, String token) {
-        return authRepository.login(email, password, token);
+        return authRepository.login(email, password, token)
+                .observeOn(uiThread)
+                .subscribeOn(executorThread);
     }
 
     @Override
     public Observable<Result> validatePhone(String phone) {
-        return authRepository.validatePhone(phone);
+        return authRepository.validatePhone(phone)
+                .observeOn(uiThread)
+                .subscribeOn(executorThread);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.walter.cojal.easylearning.data.repository.user;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.data.Entities.User;
-import com.walter.cojal.easylearning.network.ServiceApi;
+import com.walter.cojal.easylearning.data.network.ServiceApi;
 
 import javax.inject.Inject;
 

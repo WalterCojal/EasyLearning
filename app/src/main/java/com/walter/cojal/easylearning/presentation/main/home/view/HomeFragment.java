@@ -1,11 +1,9 @@
-package com.walter.cojal.easylearning.presentation.home.fragmentHome.view;
+package com.walter.cojal.easylearning.presentation.main.home.view;
 
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,8 +17,8 @@ import com.walter.cojal.easylearning.data.Entities.Asesor;
 import com.walter.cojal.easylearning.data.Entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
-import com.walter.cojal.easylearning.presentation.home.fragmentHome.IFragHomeContract;
-import com.walter.cojal.easylearning.presentation.home.fragmentHome.presenter.FragHomePresenter;
+import com.walter.cojal.easylearning.presentation.main.home.IFragHomeContract;
+import com.walter.cojal.easylearning.presentation.main.home.presenter.FragHomePresenter;
 
 import java.util.ArrayList;
 
@@ -63,7 +61,7 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IVie
         asesors.setItemAnimator(new DefaultItemAnimator());
         asesors.setAdapter(asesorAdapter);
         ArrayList<Asesor> items = new ArrayList<>();
-        items.add(new Asesor(1, "Richard", "Guevara", "mail", "991988248", 55));
+        items.add(new Asesor(1, "Richard", "Guevara", 55));
         getDataSuccess(items);
     }
 

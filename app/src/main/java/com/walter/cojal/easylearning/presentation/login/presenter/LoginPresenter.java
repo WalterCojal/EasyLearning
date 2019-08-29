@@ -26,7 +26,7 @@ public class LoginPresenter implements ILoginContract.IPresenter {
     }
 
     @Override
-    public void dettachView() {
+    public void detachView() {
         view = null;
     }
 

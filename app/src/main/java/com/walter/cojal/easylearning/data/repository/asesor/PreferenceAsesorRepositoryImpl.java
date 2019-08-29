@@ -8,8 +8,12 @@ import javax.inject.Inject;
 
 public class PreferenceAsesorRepositoryImpl implements IPreferenceAsesorRepository {
 
-    @Inject
     SavePreferences savePreferences;
+
+    @Inject
+    public PreferenceAsesorRepositoryImpl(SavePreferences savePreferences) {
+        this.savePreferences = savePreferences;
+    }
 
     @Override
     public void saveAsesor(Asesor asesor) {

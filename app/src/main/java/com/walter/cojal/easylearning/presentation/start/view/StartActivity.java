@@ -8,6 +8,8 @@ import com.walter.cojal.easylearning.base.BaseActivity;
 import com.walter.cojal.easylearning.data.Entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
+import com.walter.cojal.easylearning.presentation.main.view.HomeActivity;
+import com.walter.cojal.easylearning.presentation.login.view.LoginActivity;
 import com.walter.cojal.easylearning.presentation.start.IStartContract;
 import com.walter.cojal.easylearning.presentation.start.presenter.StartPresenter;
 import com.walter.cojal.easylearning.utility.Constant;
@@ -22,11 +24,6 @@ public class StartActivity extends BaseActivity implements IStartContract.IView 
     @Inject
     SavePreferences savePreferences;
     User user;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     protected int getContentView() {
@@ -70,11 +67,15 @@ public class StartActivity extends BaseActivity implements IStartContract.IView 
 
     @Override
     public void goToLogin() {
-
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void goToDashboard() {
-
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

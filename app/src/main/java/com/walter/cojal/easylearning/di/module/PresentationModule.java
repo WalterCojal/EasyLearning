@@ -25,10 +25,11 @@ import com.walter.cojal.easylearning.domain.signup_interactor.ISignupInteractor;
 import com.walter.cojal.easylearning.domain.signup_interactor.SignupInteractorImpl;
 import com.walter.cojal.easylearning.domain.start_interactor.IStartInteractor;
 import com.walter.cojal.easylearning.domain.start_interactor.StartInteractorImpl;
-import com.walter.cojal.easylearning.network.ServiceApi;
-import com.walter.cojal.easylearning.presentation.home.IHomeContract;
-import com.walter.cojal.easylearning.presentation.home.fragmentHome.view.HomeFragment;
-import com.walter.cojal.easylearning.presentation.home.presenter.HomePresenter;
+import com.walter.cojal.easylearning.data.network.ServiceApi;
+import com.walter.cojal.easylearning.presentation.main.IHomeContract;
+import com.walter.cojal.easylearning.presentation.main.home.view.HomeFragment;
+import com.walter.cojal.easylearning.presentation.main.presenter.HomePresenter;
+import com.walter.cojal.easylearning.utility.SavePreferences;
 
 import dagger.Module;
 import dagger.Provides;
@@ -59,8 +60,8 @@ public class PresentationModule {
     }
 
     @Provides
-    IPreferenceAuthRepository providePreferenceAuthRepository() {
-        return new PreferenceAuthRepositoryImpl();
+    IPreferenceAuthRepository providePreferenceAuthRepository(SavePreferences savePreferences) {
+        return new PreferenceAuthRepositoryImpl(savePreferences);
     }
 
     @Provides
@@ -69,13 +70,13 @@ public class PresentationModule {
     }
 
     @Provides
-    IPreferenceUserRepository providePreferenceUserRepository() {
-        return new PreferenceUserRepositoryImpl();
+    IPreferenceUserRepository providePreferenceUserRepository(SavePreferences savePreferences) {
+        return new PreferenceUserRepositoryImpl(savePreferences);
     }
 
     @Provides
-    IPreferenceAsesorRepository providePreferenceAsesorRepository() {
-        return new PreferenceAsesorRepositoryImpl();
+    IPreferenceAsesorRepository providePreferenceAsesorRepository(SavePreferences savePreferences) {
+        return new PreferenceAsesorRepositoryImpl(savePreferences);
     }
 
     @Provides
@@ -88,8 +89,9 @@ public class PresentationModule {
     @Provides
     ILoginInteractor provideLoginInteractor(IAuthRepository authRepository,
                                             @Qualifiers.UiThread Scheduler uiThread,
-                                            @Qualifiers.ExecutorThread Scheduler executorThread) {
-        return new LoginInteractorImpl(authRepository, uiThread, executorThread);
+                                            @Qualifiers.ExecutorThread Scheduler executorThread,
+                                            IPreferenceUserRepository userRepository, IPreferenceAuthRepository preferenceAuthRepository) {
+        return new LoginInteractorImpl(authRepository, uiThread, executorThread, userRepository, preferenceAuthRepository);
     }
 
     // ============================================ Signup ============================================ //

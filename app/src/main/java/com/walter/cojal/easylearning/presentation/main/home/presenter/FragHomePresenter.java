@@ -1,8 +1,8 @@
-package com.walter.cojal.easylearning.presentation.home.fragmentHome.presenter;
+package com.walter.cojal.easylearning.presentation.main.home.presenter;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.domain.home_interactor.frag_home_interactor.IFragHomeInteractor;
-import com.walter.cojal.easylearning.presentation.home.fragmentHome.IFragHomeContract;
+import com.walter.cojal.easylearning.presentation.main.home.IFragHomeContract;
 
 import javax.inject.Inject;
 

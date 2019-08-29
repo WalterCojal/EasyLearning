@@ -1,4 +1,4 @@
-package com.walter.cojal.easylearning.presentation.home.view;
+package com.walter.cojal.easylearning.presentation.main.view;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,8 +17,8 @@ import com.walter.cojal.easylearning.base.BaseActivity;
 import com.walter.cojal.easylearning.data.Entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
-import com.walter.cojal.easylearning.presentation.home.IHomeContract;
-import com.walter.cojal.easylearning.presentation.home.fragmentHome.view.HomeFragment;
+import com.walter.cojal.easylearning.presentation.main.IHomeContract;
+import com.walter.cojal.easylearning.presentation.main.home.view.HomeFragment;
 
 import javax.inject.Inject;
 

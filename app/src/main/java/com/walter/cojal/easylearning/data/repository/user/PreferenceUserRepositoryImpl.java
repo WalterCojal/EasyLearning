@@ -8,8 +8,12 @@ import javax.inject.Inject;
 
 public class PreferenceUserRepositoryImpl implements IPreferenceUserRepository {
 
-    @Inject
     SavePreferences savePreferences;
+
+    @Inject
+    public PreferenceUserRepositoryImpl(SavePreferences savePreferences) {
+        this.savePreferences = savePreferences;
+    }
 
     @Override
     public void saveUser(User user) {

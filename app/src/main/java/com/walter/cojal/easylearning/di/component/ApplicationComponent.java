@@ -3,7 +3,7 @@ package com.walter.cojal.easylearning.di.component;
 import com.squareup.picasso.Picasso;
 import com.walter.cojal.easylearning.di.module.ApplicationModule;
 import com.walter.cojal.easylearning.di.scope.Qualifiers;
-import com.walter.cojal.easylearning.network.ServiceApi;
+import com.walter.cojal.easylearning.data.network.ServiceApi;
 import com.walter.cojal.easylearning.utility.SavePreferences;
 
 import javax.inject.Singleton;

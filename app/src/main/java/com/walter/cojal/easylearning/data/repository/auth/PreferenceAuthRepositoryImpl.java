@@ -7,8 +7,12 @@ import javax.inject.Inject;
 
 public class PreferenceAuthRepositoryImpl implements IPreferenceAuthRepository {
 
-    @Inject
     SavePreferences savePreferences;
+
+    @Inject
+    public PreferenceAuthRepositoryImpl(SavePreferences savePreferences) {
+        this.savePreferences = savePreferences;
+    }
 
     @Override
     public void saveToken(String token) {

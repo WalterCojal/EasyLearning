@@ -1,6 +1,6 @@
-package com.walter.cojal.easylearning.presentation.home.presenter;
+package com.walter.cojal.easylearning.presentation.main.presenter;
 
-import com.walter.cojal.easylearning.presentation.home.IHomeContract;
+import com.walter.cojal.easylearning.presentation.main.IHomeContract;
 
 public class HomePresenter implements IHomeContract.IPresenter {
 

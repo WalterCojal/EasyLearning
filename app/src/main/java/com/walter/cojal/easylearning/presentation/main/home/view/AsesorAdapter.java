@@ -1,4 +1,4 @@
-package com.walter.cojal.easylearning.presentation.home.fragmentHome.view;
+package com.walter.cojal.easylearning.presentation.main.home.view;
 
 import android.view.LayoutInflater;
 import android.view.View;

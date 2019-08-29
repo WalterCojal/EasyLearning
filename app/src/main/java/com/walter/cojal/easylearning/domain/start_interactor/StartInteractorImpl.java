@@ -1,7 +1,7 @@
 package com.walter.cojal.easylearning.domain.start_interactor;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
-import com.walter.cojal.easylearning.network.ServiceApi;
+import com.walter.cojal.easylearning.data.network.ServiceApi;
 
 import javax.inject.Inject;
 

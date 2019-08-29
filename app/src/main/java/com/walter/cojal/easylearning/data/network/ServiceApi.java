@@ -1,4 +1,4 @@
-package com.walter.cojal.easylearning.network;
+package com.walter.cojal.easylearning.data.network;
 
 import com.walter.cojal.easylearning.data.Entities.Result;
 import com.walter.cojal.easylearning.data.Entities.User;

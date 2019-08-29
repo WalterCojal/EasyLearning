@@ -1,4 +1,4 @@
-package com.walter.cojal.easylearning.presentation.home;
+package com.walter.cojal.easylearning.presentation.main;
 
 public interface IHomeContract {
 
