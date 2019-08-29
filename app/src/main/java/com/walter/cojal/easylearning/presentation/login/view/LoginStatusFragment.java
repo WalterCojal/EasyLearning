@@ -14,18 +14,15 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.walter.cojal.easylearning.R;
+import com.walter.cojal.easylearning.presentation.IBaseView;
 
-public class LoginStatusFragment extends BottomSheetDialogFragment {
+public class LoginStatusFragment extends BottomSheetDialogFragment implements IBaseView {
 
     TextView txtTitle, txtMessage;
     Button btnAgree, btnCancel;
-    String message;
-    int status;
     OnLoginStatusClick clickListener;
 
-    public LoginStatusFragment(String message, int status) {
-        this.message = message;
-        this.status = status;
+    public LoginStatusFragment() {
     }
 
     @SuppressLint("RestrictedApi")
@@ -40,29 +37,69 @@ public class LoginStatusFragment extends BottomSheetDialogFragment {
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
             ((BottomSheetBehavior) behavior).setBottomSheetCallback(listener);
         }
-        txtTitle = view.findViewById(R.id.fls_title);
-        txtMessage = view.findViewById(R.id.fls_message);
-        btnAgree = view.findViewById(R.id.fls_agree);
-        btnCancel = view.findViewById(R.id.fls_cancel);
+        setupViews();
+        setupListeners();
+    }
 
+    @Override
+    public void setupViews() {
+        txtTitle = getActivity().findViewById(R.id.fls_title);
+        txtMessage = getActivity().findViewById(R.id.fls_message);
+        btnAgree = getActivity().findViewById(R.id.fls_agree);
+        btnCancel = getActivity().findViewById(R.id.fls_cancel);
         txtTitle.setText(R.string.sign_failed);
-        txtMessage.setText(message);
+    }
+
+    @Override
+    public void setupListeners() {
         btnAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickListener.onClick(v, status);
+                clickListener.onClick(v);
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickListener.onClick(v, status);
+                clickListener.onClick(v);
             }
         });
     }
 
-    public void setOnClickListener(OnLoginStatusClick clickListener) {
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void showError(String errorMsg) {
+
+    }
+
+    @Override
+    public void showSuccess(String message) {
+
+    }
+
+    void setOnClickListener(OnLoginStatusClick clickListener) {
         this.clickListener = clickListener;
+    }
+
+    void setMessage(String message) {
+        txtMessage.setText(message);
+    }
+
+    void setAgreeText(String text) {
+        btnAgree.setText(text);
+    }
+
+    void setCancelText(String text) {
+        btnCancel.setText(text);
     }
 
     private BottomSheetBehavior.BottomSheetCallback listener = new BottomSheetBehavior.BottomSheetCallback() {
@@ -76,4 +113,5 @@ public class LoginStatusFragment extends BottomSheetDialogFragment {
         @Override
         public void onSlide(@NonNull View view, float v) {}
     };
+
 }

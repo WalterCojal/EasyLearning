@@ -1,19 +1,19 @@
 package com.walter.cojal.easylearning.presentation.start;
 
+import com.walter.cojal.easylearning.presentation.IBasePresenter;
+import com.walter.cojal.easylearning.presentation.IBaseView;
+
 public interface IStartContract {
 
-    interface IView {
-        void showError(String errorMsg);
+    interface IView extends IBaseView {
         void updateSuccess(int code);
         void showUpdateDialog();
         void goToLogin();
         void goToDashboard();
     }
 
-    interface IPresenter {
-        void attachView(IView view);
-        void dettachView();
-        boolean isViewAttached();
+    interface IPresenter extends IBasePresenter {
+        void isUserLogged();
         void update();
     }
 

@@ -10,24 +10,23 @@ import android.widget.Toast;
 
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.base.BaseActivity;
-import com.walter.cojal.easylearning.data.Entities.User;
+import com.walter.cojal.easylearning.data.entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
-import com.walter.cojal.easylearning.presentation.signup.ISignupContract;
-import com.walter.cojal.easylearning.presentation.signup.presenter.SignupPresenter;
+import com.walter.cojal.easylearning.presentation.signup.ISignUpContract;
+import com.walter.cojal.easylearning.presentation.signup.presenter.SignUpPresenter;
 import com.walter.cojal.easylearning.utility.Util;
 
 import javax.inject.Inject;
 
-public class SignupActivity extends BaseActivity implements ISignupContract.IView {
+public class SignupActivity extends BaseActivity implements ISignUpContract.IView {
 
     @Inject
-    SignupPresenter presenter;
+    SignUpPresenter presenter;
     @Inject
     ProgressDialog progressDialog;
     EditText edtName, edtLastName, edtEmail, edtPhone, edtPassword;
     Button btnSignUp;
-    User user = new User(0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,11 @@ public class SignupActivity extends BaseActivity implements ISignupContract.IVie
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.signUp(user);
+                presenter.signUp(edtName.getText().toString(),
+                        edtLastName.getText().toString(),
+                        edtEmail.getText().toString(),
+                        edtPhone.getText().toString(),
+                        edtPassword.getText().toString());
             }
         });
     }
@@ -94,8 +97,8 @@ public class SignupActivity extends BaseActivity implements ISignupContract.IVie
     }
 
     @Override
-    public void signUpSuccess(String message) {
-        goToLogin();
+    public void showSuccess(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -135,11 +138,6 @@ public class SignupActivity extends BaseActivity implements ISignupContract.IVie
             edtPassword.requestFocus();
             return false;
         }
-        user.setName(edtName.getText().toString());
-        user.setLastName(edtLastName.getText().toString());
-        user.setEmail(edtEmail.getText().toString());
-        user.setPhone(edtPhone.getText().toString());
-        user.setPassword(edtPassword.getText().toString());
         return true;
     }
 

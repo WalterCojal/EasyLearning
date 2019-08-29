@@ -1,7 +1,7 @@
 package com.walter.cojal.easylearning.domain.login_interactor;
 
-import com.walter.cojal.easylearning.data.Entities.Result;
-import com.walter.cojal.easylearning.data.Entities.User;
+import com.walter.cojal.easylearning.data.entities.Result;
+import com.walter.cojal.easylearning.data.entities.User;
 import com.walter.cojal.easylearning.data.repository.auth.IAuthRepository;
 import com.walter.cojal.easylearning.data.repository.auth.IPreferenceAuthRepository;
 import com.walter.cojal.easylearning.data.repository.user.IPreferenceUserRepository;

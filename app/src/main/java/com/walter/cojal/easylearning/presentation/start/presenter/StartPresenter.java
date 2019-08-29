@@ -1,7 +1,9 @@
 package com.walter.cojal.easylearning.presentation.start.presenter;
 
-import com.walter.cojal.easylearning.data.Entities.Result;
+import com.walter.cojal.easylearning.data.entities.Result;
+import com.walter.cojal.easylearning.data.entities.User;
 import com.walter.cojal.easylearning.domain.start_interactor.IStartInteractor;
+import com.walter.cojal.easylearning.presentation.IBaseView;
 import com.walter.cojal.easylearning.presentation.start.IStartContract;
 
 import javax.inject.Inject;
@@ -21,12 +23,12 @@ public class StartPresenter implements IStartContract.IPresenter {
     }
 
     @Override
-    public void attachView(IStartContract.IView view) {
-        this.view = view;
+    public void attachView(IBaseView view) {
+        this.view = (IStartContract.IView) view;
     }
 
     @Override
-    public void dettachView() {
+    public void detachView() {
         view = null;
         if (disposable != null) {
             disposable.dispose();
@@ -36,6 +38,16 @@ public class StartPresenter implements IStartContract.IPresenter {
     @Override
     public boolean isViewAttached() {
         return view != null;
+    }
+
+    @Override
+    public void isUserLogged() {
+        User user = interactor.getUser();
+        if (user != null) {
+            view.goToDashboard();
+        } else {
+            view.goToLogin();
+        }
     }
 
     @Override

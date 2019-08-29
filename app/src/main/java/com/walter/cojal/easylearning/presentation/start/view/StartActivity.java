@@ -5,15 +5,12 @@ import android.os.Bundle;
 
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.base.BaseActivity;
-import com.walter.cojal.easylearning.data.Entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
-import com.walter.cojal.easylearning.presentation.main.view.HomeActivity;
+import com.walter.cojal.easylearning.presentation.main.view.MainActivity;
 import com.walter.cojal.easylearning.presentation.login.view.LoginActivity;
 import com.walter.cojal.easylearning.presentation.start.IStartContract;
 import com.walter.cojal.easylearning.presentation.start.presenter.StartPresenter;
-import com.walter.cojal.easylearning.utility.Constant;
-import com.walter.cojal.easylearning.utility.SavePreferences;
 
 import javax.inject.Inject;
 
@@ -21,9 +18,6 @@ public class StartActivity extends BaseActivity implements IStartContract.IView 
 
     @Inject
     StartPresenter presenter;
-    @Inject
-    SavePreferences savePreferences;
-    User user;
 
     @Override
     protected int getContentView() {
@@ -33,13 +27,10 @@ public class StartActivity extends BaseActivity implements IStartContract.IView 
     @Override
     protected void onViewReady(Bundle saveInstanceState, Intent intent) {
         super.onViewReady(saveInstanceState, intent);
-        user = savePreferences.getUser(Constant.KEY_USER);
         presenter.attachView(this);
-        if (user != null) {
-            goToDashboard();
-        } else {
-            goToLogin();
-        }
+        setupViews();
+        setupListeners();
+        presenter.isUserLogged();
     }
 
     @Override
@@ -51,7 +42,32 @@ public class StartActivity extends BaseActivity implements IStartContract.IView 
     }
 
     @Override
+    public void setupViews() {
+
+    }
+
+    @Override
+    public void setupListeners() {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
     public void showError(String errorMsg) {
+
+    }
+
+    @Override
+    public void showSuccess(String message) {
 
     }
 
@@ -74,8 +90,20 @@ public class StartActivity extends BaseActivity implements IStartContract.IView 
 
     @Override
     public void goToDashboard() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        presenter.detachView();
+        super.onDetachedFromWindow();
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.detachView();
+        super.onDestroy();
     }
 }

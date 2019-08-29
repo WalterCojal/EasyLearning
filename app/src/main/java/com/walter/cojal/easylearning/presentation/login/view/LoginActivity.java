@@ -22,10 +22,10 @@ import com.facebook.accountkit.ui.LoginType;
 import com.facebook.accountkit.ui.SkinManager;
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.base.BaseActivity;
-import com.walter.cojal.easylearning.data.Entities.User;
+import com.walter.cojal.easylearning.data.entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
-import com.walter.cojal.easylearning.presentation.main.view.HomeActivity;
+import com.walter.cojal.easylearning.presentation.main.view.MainActivity;
 import com.walter.cojal.easylearning.presentation.login.ILoginContract;
 import com.walter.cojal.easylearning.presentation.login.presenter.LoginPresenter;
 import com.walter.cojal.easylearning.presentation.signup.view.SignupActivity;
@@ -59,7 +59,7 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
         super.onViewReady(saveInstanceState, intent);
         presenter.attachView(this);
         setupViews();
-        setupListener();
+        setupListeners();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
     }
 
     @Override
-    public void setupListener() {
+    public void setupListeners() {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +110,11 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
     @Override
     public void showError(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showSuccess(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -199,7 +204,7 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
 
     @Override
     public void goToDashboard() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -212,16 +217,30 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
 
     @Override
     public void loginError(String message, int status) {
-        statusFragment = new LoginStatusFragment(message, status);
+        statusFragment = new LoginStatusFragment();
         statusFragment.show(getSupportFragmentManager(), "LoginStatusFragment");
+        statusFragment.setMessage(message);
+        statusFragment.setAgreeText(getString(R.string.agree));
+        switch (status) {
+            case 0: {
+                statusFragment.setCancelText(getString(R.string.create_account));
+                break;
+            }
+            case 1: {
+                statusFragment.setCancelText(getString(R.string.recover_password));
+                break;
+            }
+        }
         statusFragment.setOnClickListener(new OnLoginStatusClick() {
             @Override
-            public void onClick(View view, int status) {
+            public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.fls_agree: {
+                        statusFragment.dismiss();
                         break;
                     }
                     case R.id.fls_cancel: {
+                        statusFragment.dismiss();
                         break;
                     }
                 }

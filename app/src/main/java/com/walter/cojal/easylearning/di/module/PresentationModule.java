@@ -3,10 +3,11 @@ package com.walter.cojal.easylearning.di.module;
 import android.app.Activity;
 import android.app.ProgressDialog;
 
-import com.walter.cojal.easylearning.data.repository.asesor.IPreferenceAsesorRepository;
-import com.walter.cojal.easylearning.data.repository.asesor.IRetrofitAsesorRepository;
-import com.walter.cojal.easylearning.data.repository.asesor.PreferenceAsesorRepositoryImpl;
-import com.walter.cojal.easylearning.data.repository.asesor.RetrofitRetrofitAsesorRepositoryImpl;
+import com.squareup.picasso.Picasso;
+import com.walter.cojal.easylearning.data.repository.assessor.IPreferenceAssessorRepository;
+import com.walter.cojal.easylearning.data.repository.assessor.IRetrofitAssessorRepository;
+import com.walter.cojal.easylearning.data.repository.assessor.PreferenceAssessorRepositoryImpl;
+import com.walter.cojal.easylearning.data.repository.assessor.RetrofitRetrofitAssessorRepositoryImpl;
 import com.walter.cojal.easylearning.data.repository.auth.IAuthRepository;
 import com.walter.cojal.easylearning.data.repository.auth.IPreferenceAuthRepository;
 import com.walter.cojal.easylearning.data.repository.auth.PreferenceAuthRepositoryImpl;
@@ -17,18 +18,22 @@ import com.walter.cojal.easylearning.data.repository.user.PreferenceUserReposito
 import com.walter.cojal.easylearning.data.repository.user.RetrofitRetrofitUserRepositoryImpl;
 import com.walter.cojal.easylearning.di.scope.PerActivity;
 import com.walter.cojal.easylearning.di.scope.Qualifiers;
-import com.walter.cojal.easylearning.domain.home_interactor.frag_home_interactor.FragHomeInteractorImpl;
-import com.walter.cojal.easylearning.domain.home_interactor.frag_home_interactor.IFragHomeInteractor;
+import com.walter.cojal.easylearning.domain.main_interactor.home_interactor.HomeInteractorImpl;
+import com.walter.cojal.easylearning.domain.main_interactor.home_interactor.IHomeInteractor;
 import com.walter.cojal.easylearning.domain.login_interactor.ILoginInteractor;
 import com.walter.cojal.easylearning.domain.login_interactor.LoginInteractorImpl;
+import com.walter.cojal.easylearning.domain.main_interactor.profile_interactor.IProfileInteractor;
+import com.walter.cojal.easylearning.domain.main_interactor.profile_interactor.ProfileInteractorImpl;
 import com.walter.cojal.easylearning.domain.signup_interactor.ISignupInteractor;
 import com.walter.cojal.easylearning.domain.signup_interactor.SignupInteractorImpl;
 import com.walter.cojal.easylearning.domain.start_interactor.IStartInteractor;
 import com.walter.cojal.easylearning.domain.start_interactor.StartInteractorImpl;
 import com.walter.cojal.easylearning.data.network.ServiceApi;
-import com.walter.cojal.easylearning.presentation.main.IHomeContract;
-import com.walter.cojal.easylearning.presentation.main.home.view.HomeFragment;
-import com.walter.cojal.easylearning.presentation.main.presenter.HomePresenter;
+import com.walter.cojal.easylearning.presentation.main.IMainContract;
+import com.walter.cojal.easylearning.presentation.main._home.view.AssessorAdapter;
+import com.walter.cojal.easylearning.presentation.main._home.view.HomeFragment;
+import com.walter.cojal.easylearning.presentation.main._profile.view.ProfileFragment;
+import com.walter.cojal.easylearning.presentation.main.presenter.MainPresenter;
 import com.walter.cojal.easylearning.utility.SavePreferences;
 
 import dagger.Module;
@@ -75,13 +80,13 @@ public class PresentationModule {
     }
 
     @Provides
-    IPreferenceAsesorRepository providePreferenceAsesorRepository(SavePreferences savePreferences) {
-        return new PreferenceAsesorRepositoryImpl(savePreferences);
+    IPreferenceAssessorRepository providePreferenceAssessorRepository(SavePreferences savePreferences) {
+        return new PreferenceAssessorRepositoryImpl(savePreferences);
     }
 
     @Provides
-    IRetrofitAsesorRepository provideRetrofitAsesorRepository(ServiceApi serviceApi) {
-        return new RetrofitRetrofitAsesorRepositoryImpl(serviceApi);
+    IRetrofitAssessorRepository provideRetrofitAssessorRepository(ServiceApi serviceApi) {
+        return new RetrofitRetrofitAssessorRepositoryImpl(serviceApi);
     }
 
     // ============================================ Login ============================================ //
@@ -106,26 +111,45 @@ public class PresentationModule {
     @Provides
     IStartInteractor provideStartInteractor(ServiceApi serviceApi,
                                             @Qualifiers.UiThread Scheduler uiThread,
-                                            @Qualifiers.ExecutorThread Scheduler executorThread) {
-        return new StartInteractorImpl(serviceApi, uiThread, executorThread);
+                                            @Qualifiers.ExecutorThread Scheduler executorThread,
+                                            IPreferenceUserRepository userRepository) {
+        return new StartInteractorImpl(serviceApi, uiThread, executorThread, userRepository);
     }
 
-    // ============================================ Home ============================================ //
+    // ============================================ Main ============================================ //
     @Provides
-    IHomeContract.IPresenter provideHomeContractPresenter() {
-        return new HomePresenter();
+    IMainContract.IPresenter provideHomeContractPresenter() {
+        return new MainPresenter();
     }
+
     // Home Fragment
-    @Provides
-    IFragHomeInteractor provideFragHomeInteractor(ServiceApi serviceApi,
-                                                  @Qualifiers.UiThread Scheduler uiThread,
-                                                  @Qualifiers.ExecutorThread Scheduler executorThread) {
-        return new FragHomeInteractorImpl(serviceApi, uiThread, executorThread);
-    }
-
     @Provides
     HomeFragment provideHomeFragment() {
         return new HomeFragment();
+    }
+
+    @Provides
+    IHomeInteractor provideHomeInteractor(ServiceApi serviceApi,
+                                          @Qualifiers.UiThread Scheduler uiThread,
+                                          @Qualifiers.ExecutorThread Scheduler executorThread) {
+        return new HomeInteractorImpl(serviceApi, uiThread, executorThread);
+    }
+
+    @Provides
+    AssessorAdapter provideAssessorAdapter(Picasso picasso) {
+        return new AssessorAdapter(picasso);
+    }
+
+    // Profile Fragment
+    @Provides
+    ProfileFragment provideProfileFragment() {
+        return new ProfileFragment();
+    }
+
+    @Provides
+    IProfileInteractor provideProfileInteractor(IPreferenceUserRepository preferenceUser,
+                                                IRetrofitUserRepository retrofitUser) {
+        return new ProfileInteractorImpl(preferenceUser, retrofitUser);
     }
 
 }

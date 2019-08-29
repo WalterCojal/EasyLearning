@@ -1,6 +1,6 @@
 package com.walter.cojal.easylearning.data.repository.auth;
 
-import com.walter.cojal.easylearning.data.Entities.Result;
+import com.walter.cojal.easylearning.data.entities.Result;
 import com.walter.cojal.easylearning.data.network.ServiceApi;
 
 import javax.inject.Inject;

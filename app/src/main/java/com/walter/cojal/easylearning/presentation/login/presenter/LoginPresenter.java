@@ -1,7 +1,8 @@
 package com.walter.cojal.easylearning.presentation.login.presenter;
 
-import com.walter.cojal.easylearning.data.Entities.Result;
+import com.walter.cojal.easylearning.data.entities.Result;
 import com.walter.cojal.easylearning.domain.login_interactor.ILoginInteractor;
+import com.walter.cojal.easylearning.presentation.IBaseView;
 import com.walter.cojal.easylearning.presentation.login.ILoginContract;
 
 import javax.inject.Inject;
@@ -21,8 +22,8 @@ public class LoginPresenter implements ILoginContract.IPresenter {
     }
 
     @Override
-    public void attachView(ILoginContract.IView view) {
-        this.view = view;
+    public void attachView(IBaseView view) {
+        this.view = (ILoginContract.IView) view ;
     }
 
     @Override
@@ -31,7 +32,7 @@ public class LoginPresenter implements ILoginContract.IPresenter {
     }
 
     @Override
-    public Boolean isViewAttached() {
+    public boolean isViewAttached() {
         return view != null;
     }
 

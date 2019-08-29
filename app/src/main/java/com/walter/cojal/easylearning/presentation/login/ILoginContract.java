@@ -1,15 +1,12 @@
 package com.walter.cojal.easylearning.presentation.login;
 
-import com.walter.cojal.easylearning.data.Entities.User;
+import com.walter.cojal.easylearning.data.entities.User;
+import com.walter.cojal.easylearning.presentation.IBasePresenter;
+import com.walter.cojal.easylearning.presentation.IBaseView;
 
 public interface ILoginContract {
 
-    interface IView {
-        void setupViews();
-        void setupListener();
-        void showProgress();
-        void hideProgress();
-        void showError(String error);
+    interface IView extends IBaseView {
         Boolean validate();
         void loginSuccess(User user, String apiToken);
         void loginError(String message, int status);
@@ -18,10 +15,7 @@ public interface ILoginContract {
         void accountKitLogin();
     }
 
-    interface IPresenter {
-        void attachView(IView view);
-        void detachView();
-        Boolean isViewAttached();
+    interface IPresenter extends IBasePresenter {
         void login(String email, String password,String token);
     }
 

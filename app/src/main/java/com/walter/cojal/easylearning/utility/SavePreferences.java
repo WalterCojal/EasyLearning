@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.walter.cojal.easylearning.data.Entities.Asesor;
-import com.walter.cojal.easylearning.data.Entities.User;
+import com.walter.cojal.easylearning.data.entities.Assessor;
+import com.walter.cojal.easylearning.data.entities.User;
 
 public class SavePreferences {
 
@@ -49,18 +49,18 @@ public class SavePreferences {
         else return gson.fromJson(jsonString, User.class);
     }
 
-    public void saveAsesor(String key, Asesor asesor) {
+    public void saveAsesor(String key, Assessor assessor) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String jsonString = gson.toJson(asesor);
+        String jsonString = gson.toJson(assessor);
         editor.putString(key, jsonString).apply();
     }
 
-    public Asesor getAsesor(String key) {
+    public Assessor getAsesor(String key) {
         String jsonString = sharedPreferences.getString(key, "");
         Gson gson = new Gson();
         if (jsonString.isEmpty()) return null;
-        else return gson.fromJson(jsonString, Asesor.class);
+        else return gson.fromJson(jsonString, Assessor.class);
     }
 
     public Boolean existsPreference(String key) {

@@ -1,6 +1,6 @@
 package com.walter.cojal.easylearning.data.repository.user;
 
-import com.walter.cojal.easylearning.data.Entities.User;
+import com.walter.cojal.easylearning.data.entities.User;
 
 public interface IPreferenceUserRepository {
 

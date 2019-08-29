@@ -43,7 +43,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeBase" />
         <activity
-            android:name=".presentation.main.view.HomeActivity"
+            android:name=".presentation.main.view.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeBase">
             <intent-filter>
