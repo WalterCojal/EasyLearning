@@ -10,6 +10,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ServiceApi {
 
@@ -24,7 +25,11 @@ public interface ServiceApi {
 
     @POST("register")
     @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
-    Observable<Result> signup(@Body User user);
+    Observable<Result> signUp(@Body User user);
+
+    @POST("userUpdate")
+    @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
+    Observable<Result> update(@Body User user);
 
     @POST("email")
     @FormUrlEncoded
@@ -36,5 +41,8 @@ public interface ServiceApi {
 
     @GET("getHomeData")
     Observable<Result> getHomeData();
+
+    @GET("getAssessorData/{id}")
+    Observable<Result> getAssessorData(@Path("id") int userId);
 
 }

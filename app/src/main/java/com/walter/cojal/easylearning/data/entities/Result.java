@@ -11,6 +11,7 @@ public class Result {
     private User user;
     private int code;
     private ArrayList<Assessor> assessors;
+    private Assessor assessor;
     @SerializedName("api_token")
     private String apiToken;
 
@@ -36,5 +37,9 @@ public class Result {
 
     public String getApiToken() {
         return apiToken;
+    }
+
+    public Assessor getAssessor() {
+        return assessor;
     }
 }

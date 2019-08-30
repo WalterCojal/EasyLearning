@@ -148,8 +148,11 @@ public class PresentationModule {
 
     @Provides
     IProfileInteractor provideProfileInteractor(IPreferenceUserRepository preferenceUser,
-                                                IRetrofitUserRepository retrofitUser) {
-        return new ProfileInteractorImpl(preferenceUser, retrofitUser);
+                                                IRetrofitUserRepository retrofitUser,
+                                                IRetrofitAssessorRepository retrofitAssessor,
+                                                @Qualifiers.UiThread Scheduler uiThread,
+                                                @Qualifiers.ExecutorThread Scheduler executorThread) {
+        return new ProfileInteractorImpl(preferenceUser, retrofitUser, retrofitAssessor, uiThread, executorThread);
     }
 
 }

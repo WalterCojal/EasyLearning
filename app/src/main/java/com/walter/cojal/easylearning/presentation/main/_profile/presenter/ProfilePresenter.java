@@ -1,15 +1,22 @@
 package com.walter.cojal.easylearning.presentation.main._profile.presenter;
 
+import com.walter.cojal.easylearning.data.entities.Result;
+import com.walter.cojal.easylearning.data.entities.User;
 import com.walter.cojal.easylearning.domain.main_interactor.profile_interactor.IProfileInteractor;
 import com.walter.cojal.easylearning.presentation.IBaseView;
 import com.walter.cojal.easylearning.presentation.main._profile.IProfileContract;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+
 public class ProfilePresenter implements IProfileContract.IPresenter {
 
     IProfileContract.IView view;
     IProfileInteractor interactor;
+    Disposable disposable;
+    User user;
 
     @Inject
     public ProfilePresenter(IProfileInteractor interactor) {
@@ -29,5 +36,89 @@ public class ProfilePresenter implements IProfileContract.IPresenter {
     @Override
     public boolean isViewAttached() {
         return view != null;
+    }
+
+    @Override
+    public void getAssessorData() {
+        view.showProgress();
+        user = interactor.getUser();
+        interactor.getAssessorData(user.getId())
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if (isViewAttached()) {
+                            view.hideProgress();
+                            view.fillUserData(user);
+                            if (result.isSuccess()) {
+                                view.fillAssessorData(result.getAssessor());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (isViewAttached()) {
+                            view.hideProgress();
+                            view.showError(e.getLocalizedMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void updateUserData(String name, String lastName, String email, String phone, int age, String birthDate) {
+        if (!view.validate()) return;
+        view.showProgress();
+        user.setName(name);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setAge(age);
+        user.setBirthDate(birthDate);
+        interactor.updateUserData(user)
+                .subscribe(new Observer<Result>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(Result result) {
+                        if (isViewAttached()){
+                            view.hideProgress();
+                            if (result.isSuccess()) {
+                                interactor.saveUser(user);
+                            } else {
+                                user = interactor.getUser();
+                                view.fillUserData(user);
+                            }
+                            view.setMainEdition(false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (isViewAttached()) {
+                            view.hideProgress();
+                            view.fillUserData(user);
+                            view.showError(e.getLocalizedMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

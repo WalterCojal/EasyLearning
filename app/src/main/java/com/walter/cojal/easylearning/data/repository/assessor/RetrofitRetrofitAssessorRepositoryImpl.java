@@ -18,6 +18,11 @@ public class RetrofitRetrofitAssessorRepositoryImpl implements IRetrofitAssessor
 
     @Override
     public Observable<Result> getAll() {
-        return null;
+        return serviceApi.getHomeData();
+    }
+
+    @Override
+    public Observable<Result> getAssessorData(int userId) {
+        return serviceApi.getAssessorData(userId);
     }
 }

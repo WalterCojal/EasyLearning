@@ -19,12 +19,12 @@ public class RetrofitRetrofitUserRepositoryImpl implements IRetrofitUserReposito
 
     @Override
     public Observable<Result> create(User user) {
-        return serviceApi.signup(user);
+        return serviceApi.signUp(user);
     }
 
     @Override
     public Observable<Result> update(User user) {
-        return null;
+        return serviceApi.update(user);
     }
 
     @Override

@@ -16,5 +16,9 @@
     <string name="create_account">Crear cuenta</string>
     <string name="agree">Aceptar</string>
     <string name="recover_password">Recuperar contraseña</string>
+    <string name="save_changed">Guardar camnbios</string>
+    <string name="modify_my_profile">Modificar mis datos</string>
+    <string name="age">Edad</string>
+    <string name="birthdate">Nacimiento</string>
 
 </resources>

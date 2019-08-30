@@ -7,5 +7,6 @@ import io.reactivex.Observable;
 public interface IRetrofitAssessorRepository {
 
     Observable<Result> getAll();
+    Observable<Result> getAssessorData(int userId);
 
 }
