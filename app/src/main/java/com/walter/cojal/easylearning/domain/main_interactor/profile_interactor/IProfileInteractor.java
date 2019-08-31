@@ -13,5 +13,6 @@ public interface IProfileInteractor {
     Observable<Result> updateUserImage(MultipartBody.Part image, int userId);
     User getUser();
     void saveUser(User user);
+    void logout();
 
 }

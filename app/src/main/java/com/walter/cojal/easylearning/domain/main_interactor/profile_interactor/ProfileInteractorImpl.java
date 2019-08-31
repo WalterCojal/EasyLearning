@@ -3,6 +3,7 @@ package com.walter.cojal.easylearning.domain.main_interactor.profile_interactor;
 import com.walter.cojal.easylearning.data.entities.Result;
 import com.walter.cojal.easylearning.data.entities.User;
 import com.walter.cojal.easylearning.data.repository.assessor.IRetrofitAssessorRepository;
+import com.walter.cojal.easylearning.data.repository.auth.IPreferenceAuthRepository;
 import com.walter.cojal.easylearning.data.repository.user.IPreferenceUserRepository;
 import com.walter.cojal.easylearning.data.repository.user.IRetrofitUserRepository;
 
@@ -19,14 +20,16 @@ public class ProfileInteractorImpl implements IProfileInteractor {
     IRetrofitAssessorRepository retrofitAssessor;
     Scheduler uiThread;
     Scheduler executorThread;
+    IPreferenceAuthRepository authRepository;
 
     @Inject
-    public ProfileInteractorImpl(IPreferenceUserRepository preferenceUser, IRetrofitUserRepository retrofitUser, IRetrofitAssessorRepository retrofitAssessor, Scheduler uiThread, Scheduler executorThread) {
+    public ProfileInteractorImpl(IPreferenceUserRepository preferenceUser, IRetrofitUserRepository retrofitUser, IRetrofitAssessorRepository retrofitAssessor, Scheduler uiThread, Scheduler executorThread, IPreferenceAuthRepository authRepository) {
         this.preferenceUser = preferenceUser;
         this.retrofitUser = retrofitUser;
         this.retrofitAssessor = retrofitAssessor;
         this.uiThread = uiThread;
         this.executorThread = executorThread;
+        this.authRepository = authRepository;
     }
 
     @Override
@@ -37,6 +40,11 @@ public class ProfileInteractorImpl implements IProfileInteractor {
     @Override
     public void saveUser(User user) {
         preferenceUser.saveUser(user);
+    }
+
+    @Override
+    public void logout() {
+        authRepository.logout();
     }
 
     @Override

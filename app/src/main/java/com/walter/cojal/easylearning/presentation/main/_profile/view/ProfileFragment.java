@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
@@ -29,6 +30,7 @@ import com.walter.cojal.easylearning.data.entities.Assessor;
 import com.walter.cojal.easylearning.data.entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
+import com.walter.cojal.easylearning.presentation.login.view.LoginActivity;
 import com.walter.cojal.easylearning.presentation.main._profile.IProfileContract;
 import com.walter.cojal.easylearning.presentation.main._profile.presenter.ProfilePresenter;
 import com.walter.cojal.easylearning.utility.Utils;
@@ -56,10 +58,11 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
     @Inject
     Picasso picasso;
 
-    EditText edtName, edtLastName, edtEmail, edtPhone, edtAge, edtBirthDate;
+    EditText edtName, edtLastName, edtEmail, edtPhone, edtAge, edtBirthDate, edtGenre, edtDocument, edtAcademic, edtRating;
+    Button editMain, editAssessor, btnAddAssessor, btnLogout;
+    ConstraintLayout layoutAssessor;
     RoundedImageView imgIcon;
     ImageButton editImage;
-    Button editMain;
     boolean isEditing = false;
 
     public ProfileFragment() {
@@ -96,9 +99,17 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
         edtLastName = getActivity().findViewById(R.id.profile_last_name);
         edtName = getActivity().findViewById(R.id.profile_name);
         edtPhone = getActivity().findViewById(R.id.profile_phone);
+        edtGenre = getActivity().findViewById(R.id.profile_genre);
+        edtDocument = getActivity().findViewById(R.id.profile_document);
+        edtAcademic = getActivity().findViewById(R.id.profile_academic);
+        edtRating = getActivity().findViewById(R.id.profile_rating);
         imgIcon = getActivity().findViewById(R.id.profile_image);
         editImage = getActivity().findViewById(R.id.profile_edit_image);
         editMain = getActivity().findViewById(R.id.profile_edit_main);
+        btnLogout = getActivity().findViewById(R.id.profile_logout);
+        editAssessor = getActivity().findViewById(R.id.profile_edit_assessor);
+        btnAddAssessor = getActivity().findViewById(R.id.profile_add_assessor);
+        layoutAssessor = getActivity().findViewById(R.id.profile_assessor_info);
     }
 
     @Override
@@ -123,6 +134,24 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
             @Override
             public void onClick(View v) {
                 openCamera();
+            }
+        });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO logout
+            }
+        });
+        btnAddAssessor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO go to add assessor activity
+            }
+        });
+        editAssessor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO edit assessor
             }
         });
     }
@@ -205,12 +234,31 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
 
     @Override
     public void fillAssessorData(Assessor assessor) {
-
+        edtGenre.setText(assessor.getGenre());
+        edtDocument.setText(assessor.getDocument());
+        edtAcademic.setText(assessor.getAcademic());
+        int rating = (int) Math.round(assessor.getRating());
+        edtRating.setText(String.valueOf(rating));
+        layoutAssessor.setVisibility(View.GONE);
     }
 
     @Override
     public void fillImage(String path) {
         picasso.load(path).into(imgIcon);
+    }
+
+    @Override
+    public void showAssessorData(boolean edition) {
+        edtGenre.setEnabled(edition);
+        edtDocument.setEnabled(edition);
+        edtAcademic.setEnabled(edition);
+    }
+
+    @Override
+    public void goToLogin() {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @Override

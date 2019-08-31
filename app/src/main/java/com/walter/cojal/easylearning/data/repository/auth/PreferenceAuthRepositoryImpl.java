@@ -19,4 +19,8 @@ public class PreferenceAuthRepositoryImpl implements IPreferenceAuthRepository {
         savePreferences.saveString(Constants.API_TOKEN, token);
     }
 
+    @Override
+    public void logout() {
+        savePreferences.clearPreferences();
+    }
 }

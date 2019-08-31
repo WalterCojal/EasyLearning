@@ -5,6 +5,7 @@ import com.walter.cojal.easylearning.data.entities.User;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -46,13 +47,29 @@ public interface ServiceApi {
     @FormUrlEncoded
     Observable<Result> validatePhone(@Field("phone") String phone);
 
-    @GET("getHomeData")
-    Observable<Result> getHomeData();
+    @GET("getHomeData/{id}")
+    Observable<Result> getHomeData(@Path("id") int userId);
+
+    @Multipart
+    @POST("addAssessor/{id}")
+    Observable<Result> addAssessor(@Part("genre") RequestBody genre,
+                                   @Part("document") RequestBody document,
+                                   @Part("academic") RequestBody academic,
+                                   @Part("assignments") RequestBody assignments,
+                                   @Path("user_id") int userId);
 
     @GET("getAssessorData/{id}")
     Observable<Result> getAssessorData(@Path("id") int userId);
 
     @GET("getFavorites/{id}")
     Observable<Result> getFavorites(@Path("id") int userId);
+
+    @POST("addFavorite")
+    @FormUrlEncoded
+    Observable<Result> addFavorite(@Field("user_id") int userId,
+                                   @Field("assessor_id") int assessorId);
+
+    @GET("getAssessorDetail/{id}")
+    Observable<Result> getAssessorDetail(@Path("id") int assessorId);
 
 }

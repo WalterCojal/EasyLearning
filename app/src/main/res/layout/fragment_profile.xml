@@ -17,8 +17,6 @@
             android:id="@+id/profile_logout"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/easy_36"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:background="@android:color/transparent"
             android:text="@string/logout"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -237,6 +235,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_add_assessor">
@@ -312,6 +311,9 @@
                     android:id="@+id/profile_rating"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_star"
+                    android:drawablePadding="@dimen/easy_2"
+                    android:textAlignment="viewEnd"
                     android:hint="@string/rating" />
             </com.google.android.material.textfield.TextInputLayout>
 

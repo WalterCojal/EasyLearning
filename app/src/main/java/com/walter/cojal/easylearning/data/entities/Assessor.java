@@ -17,6 +17,7 @@ public class Assessor {
     private Double rating;
     private int status;
     private ArrayList<String> assignments;
+    private int favorite;
 
     public Assessor(int id, String name, String lastName, int age) {
         this.id = id;
@@ -104,5 +105,13 @@ public class Assessor {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(int favorite) {
+        this.favorite = favorite;
     }
 }

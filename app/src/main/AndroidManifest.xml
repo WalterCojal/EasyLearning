@@ -17,21 +17,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        
+        <activity android:name=".presentation.assessor.view.AssessorActivity"></activity>
+
         <provider
-            android:authorities="${applicationId}.provider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
-        
+
         <activity
             android:name=".presentation.start.view.StartActivity"
-            android:theme="@style/AppThemeSplash"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,7 +69,7 @@
         <activity
             android:name=".presentation.login.view.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeSplash"/>
+            android:theme="@style/AppThemeSplash" />
     </application>
 
 </manifest>

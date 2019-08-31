@@ -26,5 +26,7 @@
     <string name="academic">Grado académico</string>
     <string name="rating">Calificación</string>
     <string name="logout">Cerrar sesión</string>
+    <string name="save_data">Guardar datos</string>
+    <string name="signup_as_assessor">Registrarme como asesor</string>
 
 </resources>

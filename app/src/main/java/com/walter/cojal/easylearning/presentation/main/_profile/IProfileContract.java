@@ -15,12 +15,15 @@ public interface IProfileContract {
         void fillAssessorData(Assessor assessor);
         boolean validate();
         void fillImage(String path);
+        void goToLogin();
+        void showAssessorData(boolean edition);
     }
 
     interface IPresenter extends IBasePresenter {
         void getAssessorData();
         void updateUserData(String name, String lastName, String email, String phone, int age, String birthDate);
         void updateUserImage(MultipartBody.Part image);
+        void logout();
     }
 
 }

@@ -2,6 +2,7 @@ package com.walter.cojal.easylearning.presentation.main._home.view;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.walter.cojal.easylearning.base.BaseFragment;
 import com.walter.cojal.easylearning.data.entities.Assessor;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
+import com.walter.cojal.easylearning.presentation.login.view.LoginActivity;
 import com.walter.cojal.easylearning.presentation.main._home.IHomeContract;
 import com.walter.cojal.easylearning.presentation.main._home.presenter.HomePresenter;
 
@@ -83,6 +85,17 @@ public class HomeFragment extends BaseFragment implements IHomeContract.IView {
                 presenter.getData();
             }
         });
+        assessorAdapter.setOnAssessorClickListener(new OnAssessorListener() {
+            @Override
+            public void itemViewClick(Assessor assessor) {
+                presenter.assessorDetail(assessor);
+            }
+
+            @Override
+            public void itemFavClick(int assessorId) {
+                presenter.addFavorite(assessorId);
+            }
+        });
     }
 
     @Override
@@ -119,4 +132,11 @@ public class HomeFragment extends BaseFragment implements IHomeContract.IView {
         assessorAdapter.setItems(items);
     }
 
+    @Override
+    public void goToAssessorDetail(int assessorId) {
+        // TODO actualizar el activity
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.putExtra("id", assessorId);
+        startActivity(intent);
+    }
 }

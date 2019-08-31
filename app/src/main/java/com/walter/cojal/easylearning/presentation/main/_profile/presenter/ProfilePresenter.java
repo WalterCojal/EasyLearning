@@ -143,6 +143,7 @@ public class ProfilePresenter implements IProfileContract.IPresenter {
                         user = result.getUser();
                         interactor.saveUser(user);
                         view.fillImage(user.getImage());
+                        view.setMainEdition(false);
                     } else {
                         view.showError(result.getMessage());
                     }
@@ -162,5 +163,11 @@ public class ProfilePresenter implements IProfileContract.IPresenter {
 
             }
         });
+    }
+
+    @Override
+    public void logout() {
+        interactor.logout();
+        view.goToLogin();
     }
 }

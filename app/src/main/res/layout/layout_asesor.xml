@@ -21,11 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:text="TextView"
         android:textColor="@color/contrastText"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/l_as_age"
         app:layout_constraintStart_toEndOf="@+id/l_as_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/easy_4"
         android:text="TextView"
         android:textColor="@color/contrastText"
         android:textSize="14sp"
@@ -45,23 +43,49 @@
         android:id="@+id/l_as_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/easy_4"
         android:text="TextView"
         android:textColor="@color/primaryText"
         android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/l_as_icon"
+        app:layout_constraintTop_toBottomOf="@+id/l_as_profession" />
+
+    <Button
+        android:id="@+id/l_as_fav"
+        android:layout_width="@dimen/easy_20"
+        android:layout_height="@dimen/easy_20"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/ic_heart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/l_as_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:drawableEnd="@drawable/ic_star"
+        android:drawablePadding="@dimen/easy_2"
+        android:text="5"
+        android:textColor="@color/primaryText"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/l_as_name" />
 
     <View
         android:id="@+id/view3"
         android:layout_width="0dp"
         android:layout_height="0.5dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@color/navigation_backgorund"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/l_as_profession" />
+        app:layout_constraintTop_toBottomOf="@+id/l_as_age" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,31 +1,36 @@
-package com.walter.cojal.easylearning.presentation.main._favotire.presenter;
+package com.walter.cojal.easylearning.presentation.assessor.presenter;
 
+import com.google.gson.Gson;
 import com.walter.cojal.easylearning.data.entities.Result;
 import com.walter.cojal.easylearning.data.entities.User;
-import com.walter.cojal.easylearning.domain.main_interactor.favorite_interactor.IFavoriteInteractor;
+import com.walter.cojal.easylearning.domain.assessor_interactor.IAssessorInteractor;
 import com.walter.cojal.easylearning.presentation.IBaseView;
-import com.walter.cojal.easylearning.presentation.main._favotire.IFavoriteContract;
+import com.walter.cojal.easylearning.presentation.assessor.IAssessorContract;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
-public class FavoritePresenter implements IFavoriteContract.IPresenter {
+public class AssessorPresenter implements IAssessorContract.IPresenter {
 
-    IFavoriteContract.IView view;
+    IAssessorContract.IView view;
+    IAssessorInteractor interactor;
     Disposable disposable;
-    IFavoriteInteractor interactor;
-    private User user;
+    User user;
 
     @Inject
-    public FavoritePresenter(IFavoriteInteractor interactor) {
+    public AssessorPresenter(IAssessorInteractor interactor) {
         this.interactor = interactor;
     }
 
     @Override
     public void attachView(IBaseView view) {
-        this.view = (IFavoriteContract.IView) view;
+        this.view = (IAssessorContract.IView) view;
     }
 
     @Override
@@ -42,10 +47,16 @@ public class FavoritePresenter implements IFavoriteContract.IPresenter {
     }
 
     @Override
-    public void getFavorites() {
+    public void addAssessor(String genre, String document, String academic, ArrayList<String> assignments) {
+        if (!view.validate()) return;
         view.showProgress();
         user = interactor.getUser();
-        interactor.getFavorites(user.getId()).subscribe(new Observer<Result>() {
+        RequestBody rbGenre = RequestBody.create(MediaType.parse("text/plain"), genre.trim());
+        RequestBody rbDocument = RequestBody.create(MediaType.parse("text/plain"), document.trim());
+        RequestBody rbAcademic = RequestBody.create(MediaType.parse("text/plain"), academic.trim());
+        String jsonAssignments = (new Gson()).toJson(assignments);
+        RequestBody rbAssignments = RequestBody.create(MediaType.parse("text/plain"), jsonAssignments.trim());
+        interactor.addAssessor(rbGenre, rbDocument, rbAcademic, rbAssignments, user.getId()).subscribe(new Observer<Result>() {
             @Override
             public void onSubscribe(Disposable d) {
                 disposable = d;
@@ -56,9 +67,9 @@ public class FavoritePresenter implements IFavoriteContract.IPresenter {
                 if (isViewAttached()) {
                     view.hideProgress();
                     if (result.isSuccess()) {
-                        view.showItems(result.getAssessors());
+
                     } else {
-                        view.showNoItems();
+
                     }
                 }
             }
@@ -67,7 +78,6 @@ public class FavoritePresenter implements IFavoriteContract.IPresenter {
             public void onError(Throwable e) {
                 if (isViewAttached()) {
                     view.hideProgress();
-                    view.showNoItems();
                     view.showError(e.getLocalizedMessage());
                 }
             }
@@ -77,10 +87,5 @@ public class FavoritePresenter implements IFavoriteContract.IPresenter {
 
             }
         });
-    }
-
-    @Override
-    public void deleteItem(int assessorId) {
-
     }
 }
