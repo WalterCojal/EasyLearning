@@ -129,10 +129,10 @@ public class PresentationModule {
     }
 
     @Provides
-    IHomeInteractor provideHomeInteractor(ServiceApi serviceApi,
+    IHomeInteractor provideHomeInteractor(IRetrofitAssessorRepository assessorRepository,
                                           @Qualifiers.UiThread Scheduler uiThread,
                                           @Qualifiers.ExecutorThread Scheduler executorThread) {
-        return new HomeInteractorImpl(serviceApi, uiThread, executorThread);
+        return new HomeInteractorImpl(assessorRepository, uiThread, executorThread);
     }
 
     @Provides

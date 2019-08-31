@@ -1,16 +1,28 @@
 package com.walter.cojal.easylearning.presentation.main._profile.view;
 
 
+import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
+import com.walter.cojal.easylearning.BuildConfig;
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.base.BaseFragment;
 import com.walter.cojal.easylearning.data.entities.Assessor;
@@ -19,14 +31,30 @@ import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
 import com.walter.cojal.easylearning.presentation.main._profile.IProfileContract;
 import com.walter.cojal.easylearning.presentation.main._profile.presenter.ProfilePresenter;
-import com.walter.cojal.easylearning.utility.Util;
+import com.walter.cojal.easylearning.utility.Utils;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import javax.inject.Inject;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
+import static android.app.Activity.RESULT_OK;
+import static com.facebook.accountkit.internal.AccountKitController.getApplicationContext;
 
 public class ProfileFragment extends BaseFragment implements IProfileContract.IView {
 
     @Inject
     ProfilePresenter presenter;
+    @Inject
+    ProgressDialog progressDialog;
+    @Inject
+    Picasso picasso;
 
     EditText edtName, edtLastName, edtEmail, edtPhone, edtAge, edtBirthDate;
     RoundedImageView imgIcon;
@@ -91,21 +119,30 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
                 isEditing = !isEditing;
             }
         });
+        editImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCamera();
+            }
+        });
     }
 
     @Override
     public void showProgress() {
-
+        progressDialog.setMessage("Cargando...");
+        progressDialog.show();
     }
 
     @Override
     public void hideProgress() {
-
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override
     public void showError(String errorMsg) {
-
+        Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -130,7 +167,7 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
             edtPhone.requestFocus();
             return false;
         }
-        if (!edtEmail.getText().toString().isEmpty() && !Util.verifyEmail(edtEmail.getText().toString())) {
+        if (!edtEmail.getText().toString().isEmpty() && !Utils.verifyEmail(edtEmail.getText().toString())) {
             edtEmail.setError("Ingrese un correo válido");
             edtEmail.requestFocus();
             return false;
@@ -171,6 +208,11 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
     }
 
     @Override
+    public void fillImage(String path) {
+        picasso.load(path).into(imgIcon);
+    }
+
+    @Override
     public void onDetach() {
         presenter.detachView();
         super.onDetach();
@@ -180,5 +222,78 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
     public void onDestroy() {
         presenter.detachView();
         super.onDestroy();
+    }
+
+    private static final int CAMERA_REQUEST_CODE = 101;
+    private static final int REQUEST_TAKE_PHOTO = 123;
+    private void openCamera(){
+        int permissionCamera = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+        int permissionWrite = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if(permissionCamera != PackageManager.PERMISSION_GRANTED || permissionWrite != PackageManager.PERMISSION_GRANTED){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
+            } else {
+                dispatchTakePictureIntent();
+            }
+        } else {
+            dispatchTakePictureIntent();
+        }
+    }
+
+    private String currentPhotoPath = "";
+    private File mPhotoFile;
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = Utils.createImageFile(getApplicationContext());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                // Error occurred while creating the File
+            }
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getActivity(),
+                        BuildConfig.APPLICATION_ID + ".provider",
+                        photoFile);
+                currentPhotoPath = photoFile.getAbsolutePath();
+                mPhotoFile = photoFile;
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == CAMERA_REQUEST_CODE){
+            if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                showError("No puede tomar fotos, acepte los permisos");
+            } else {
+                dispatchTakePictureIntent();
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK){
+            // picasso.load(mPhotoFile).into(imgIcon);
+            byte[] bytes = Utils.getBytesPhoto(currentPhotoPath);
+            try {
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(mPhotoFile));
+                bos.write(bytes);
+                bos.flush();
+                bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), mPhotoFile);
+            MultipartBody.Part image = MultipartBody.Part.createFormData("media", mPhotoFile.getName(), requestBody);
+            presenter.updateUserImage(image);
+        }
     }
 }

@@ -4,12 +4,15 @@ import com.walter.cojal.easylearning.data.entities.Result;
 import com.walter.cojal.easylearning.data.entities.User;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ServiceApi {
@@ -30,6 +33,10 @@ public interface ServiceApi {
     @POST("userUpdate")
     @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
     Observable<Result> update(@Body User user);
+
+    @Multipart
+    @POST("setImage/{user_id}")
+    Observable<Result> updateImage(@Part MultipartBody.Part media, @Path("user_id") int userId);
 
     @POST("email")
     @FormUrlEncoded

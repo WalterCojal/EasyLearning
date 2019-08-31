@@ -6,7 +6,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.picasso.Picasso;
 import com.walter.cojal.easylearning.di.scope.Qualifiers;
 import com.walter.cojal.easylearning.data.network.ServiceApi;
-import com.walter.cojal.easylearning.utility.Constant;
+import com.walter.cojal.easylearning.utility.Constants;
 import com.walter.cojal.easylearning.utility.SavePreferences;
 
 import javax.inject.Singleton;
@@ -68,7 +68,7 @@ public class ApplicationModule {
     @Provides
     Retrofit provideRetrofit(GsonConverterFactory converterFactory, RxJava2CallAdapterFactory adapterFactory) {
         return new Retrofit.Builder()
-                .baseUrl(Constant.BASE_URL)
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(converterFactory)
                 .addCallAdapterFactory(adapterFactory)
                 .build();

@@ -10,5 +10,6 @@ public interface IAuthRepository {
     Observable<Result> recover(String email);
     Observable<Result> reset(int userID, String password);
     Observable<Result> validatePhone(String phone);
+    Observable<Result> updateData();
 
 }

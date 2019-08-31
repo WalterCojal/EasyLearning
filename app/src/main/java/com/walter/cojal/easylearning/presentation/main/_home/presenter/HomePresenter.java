@@ -65,6 +65,7 @@ public class HomePresenter implements IHomeContract.IPresenter {
                 if (isViewAttached()) {
                     view.hideProgress();
                     view.showError(e.getMessage());
+                    view.showEmptyAssessor("No hay asesores en esta zona");
                 }
             }
 

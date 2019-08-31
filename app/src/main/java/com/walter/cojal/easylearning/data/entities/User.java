@@ -15,6 +15,7 @@ public class User {
     private int age;
     private String password;
     private String token;
+    private String image;
 
     public User(String name, String lastName, String email, String phone, String password) {
         this.id = 0;
@@ -26,9 +27,10 @@ public class User {
         this.age = 0;
         this.password = password;
         this.token = "";
+        this.image = "";
     }
 
-    public User(int id, String name, String lastName, String email, String phone, String birthDate, int age, String password, String token) {
+    public User(int id, String name, String lastName, String email, String phone, String birthDate, int age, String password, String token, String image) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -38,6 +40,7 @@ public class User {
         this.age = age;
         this.password = password;
         this.token = token;
+        this.image = image;
     }
 
     public int getId() {
@@ -110,5 +113,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

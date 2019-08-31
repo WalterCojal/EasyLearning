@@ -35,4 +35,9 @@ public class RetrofitAuthRepositoryImpl implements IAuthRepository {
     public Observable<Result> validatePhone(String phone) {
         return serviceApi.validatePhone(phone);
     }
+
+    @Override
+    public Observable<Result> updateData() {
+        return serviceApi.getInitData();
+    }
 }

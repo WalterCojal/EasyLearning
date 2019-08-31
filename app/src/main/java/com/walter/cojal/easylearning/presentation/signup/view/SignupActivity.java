@@ -10,12 +10,11 @@ import android.widget.Toast;
 
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.base.BaseActivity;
-import com.walter.cojal.easylearning.data.entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
 import com.walter.cojal.easylearning.presentation.signup.ISignUpContract;
 import com.walter.cojal.easylearning.presentation.signup.presenter.SignUpPresenter;
-import com.walter.cojal.easylearning.utility.Util;
+import com.walter.cojal.easylearning.utility.Utils;
 
 import javax.inject.Inject;
 
@@ -128,7 +127,7 @@ public class SignupActivity extends BaseActivity implements ISignUpContract.IVie
             edtEmail.requestFocus();
             return false;
         }
-        if (!Util.verifyEmail(edtEmail.getText().toString())) {
+        if (!Utils.verifyEmail(edtEmail.getText().toString())) {
             edtEmail.setError("Ingrese un correo válido");
             edtEmail.requestFocus();
             return false;

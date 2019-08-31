@@ -7,6 +7,7 @@ import com.walter.cojal.easylearning.data.network.ServiceApi;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 
 public class RetrofitRetrofitUserRepositoryImpl implements IRetrofitUserRepository {
 
@@ -35,5 +36,10 @@ public class RetrofitRetrofitUserRepositoryImpl implements IRetrofitUserReposito
     @Override
     public Observable<Result> delete(int userId) {
         return null;
+    }
+
+    @Override
+    public Observable<Result> updateImage(MultipartBody.Part image, int userId) {
+        return serviceApi.updateImage(image, userId);
     }
 }

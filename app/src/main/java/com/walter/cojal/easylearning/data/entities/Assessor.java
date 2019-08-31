@@ -15,7 +15,6 @@ public class Assessor {
     private String document;
     private String academic;
     private Double rating;
-    private String image;
     private int status;
     private ArrayList<String> assignments;
 
@@ -98,13 +97,6 @@ public class Assessor {
         this.assignments = assignments;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public int getStatus() {
         return status;

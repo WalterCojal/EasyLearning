@@ -29,7 +29,7 @@ import com.walter.cojal.easylearning.presentation.main.view.MainActivity;
 import com.walter.cojal.easylearning.presentation.login.ILoginContract;
 import com.walter.cojal.easylearning.presentation.login.presenter.LoginPresenter;
 import com.walter.cojal.easylearning.presentation.signup.view.SignupActivity;
-import com.walter.cojal.easylearning.utility.Util;
+import com.walter.cojal.easylearning.utility.Utils;
 
 import javax.inject.Inject;
 
@@ -124,7 +124,7 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
             txtEmail.requestFocus();
             return false;
         }
-        if (!Util.verifyEmail(txtEmail.getText().toString())) {
+        if (!Utils.verifyEmail(txtEmail.getText().toString())) {
             txtEmail.setError("Correo electrónico inválido");
             txtEmail.requestFocus();
             return false;

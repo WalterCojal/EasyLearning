@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import okhttp3.MultipartBody;
 
 public class ProfilePresenter implements IProfileContract.IPresenter {
 
@@ -31,6 +32,9 @@ public class ProfilePresenter implements IProfileContract.IPresenter {
     @Override
     public void detachView() {
         view = null;
+        if (disposable != null) {
+            disposable.dispose();
+        }
     }
 
     @Override
@@ -120,5 +124,42 @@ public class ProfilePresenter implements IProfileContract.IPresenter {
 
                     }
                 });
+    }
+
+    @Override
+    public void updateUserImage(MultipartBody.Part image) {
+        view.showProgress();
+        interactor.updateUserImage(image, user.getId()).subscribe(new Observer<Result>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                disposable = d;
+            }
+
+            @Override
+            public void onNext(Result result) {
+                if (isViewAttached()) {
+                    view.hideProgress();
+                    if (result.isSuccess()) {
+                        user = result.getUser();
+                        view.fillImage(user.getImage());
+                    } else {
+                        view.showError(result.getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (isViewAttached()) {
+                    view.hideProgress();
+                    view.showError(e.getLocalizedMessage());
+                }
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }

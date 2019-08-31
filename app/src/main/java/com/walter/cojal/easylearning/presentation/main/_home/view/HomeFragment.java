@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -96,7 +97,7 @@ public class HomeFragment extends BaseFragment implements IHomeContract.IView {
 
     @Override
     public void showError(String error) {
-
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override

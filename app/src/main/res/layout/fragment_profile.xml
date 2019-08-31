@@ -57,10 +57,10 @@
                 android:id="@+id/profile_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
                 android:enabled="false"
+                android:hint="@string/name"
                 android:textColor="@color/contrastText"
-                android:hint="@string/name" />
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -78,10 +78,10 @@
                 android:id="@+id/profile_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
                 android:enabled="false"
+                android:hint="@string/lastname"
                 android:textColor="@color/contrastText"
-                android:hint="@string/lastname" />
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -99,11 +99,11 @@
                 android:id="@+id/profile_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
                 android:enabled="false"
-                android:textColor="@color/contrastText"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress|textWebEmailAddress"
-                android:hint="@string/email" />
+                android:textColor="@color/contrastText"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -122,11 +122,11 @@
                 android:id="@+id/profile_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
                 android:enabled="false"
-                android:textColor="@color/contrastText"
+                android:hint="@string/phone"
                 android:inputType="phone"
-                android:hint="@string/phone" />
+                android:textColor="@color/contrastText"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -144,11 +144,11 @@
                 android:id="@+id/profile_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/contrastText"
-                android:inputType="number"
                 android:enabled="false"
-                android:hint="@string/age" />
+                android:hint="@string/age"
+                android:inputType="number"
+                android:textColor="@color/contrastText"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -167,11 +167,11 @@
                 android:id="@+id/profile_birth_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/contrastText"
                 android:enabled="false"
+                android:hint="@string/birthdate"
                 android:inputType="date"
-                android:hint="@string/birthdate" />
+                android:textColor="@color/contrastText"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -189,6 +189,18 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="@dimen/easy_20"
+            android:layout_marginEnd="@dimen/easy_32"
+            android:layout_marginStart="@dimen/easy_32"
+            app:layout_constraintTop_toBottomOf="@+id/profile_edit_main"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

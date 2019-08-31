@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
+import okhttp3.MultipartBody;
 
 public class ProfileInteractorImpl implements IProfileInteractor {
 
@@ -48,6 +49,13 @@ public class ProfileInteractorImpl implements IProfileInteractor {
     @Override
     public Observable<Result> updateUserData(User user) {
         return retrofitUser.update(user)
+                .observeOn(uiThread)
+                .subscribeOn(executorThread);
+    }
+
+    @Override
+    public Observable<Result> updateUserImage(MultipartBody.Part image, int userId) {
+        return retrofitUser.updateImage(image, userId)
                 .observeOn(uiThread)
                 .subscribeOn(executorThread);
     }

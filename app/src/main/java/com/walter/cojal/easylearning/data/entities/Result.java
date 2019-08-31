@@ -12,6 +12,7 @@ public class Result {
     private int code;
     private ArrayList<Assessor> assessors;
     private Assessor assessor;
+    private ArrayList<String> academicList;
     @SerializedName("api_token")
     private String apiToken;
 
@@ -41,5 +42,9 @@ public class Result {
 
     public Assessor getAssessor() {
         return assessor;
+    }
+
+    public ArrayList<String> getAcademicList() {
+        return academicList;
     }
 }
