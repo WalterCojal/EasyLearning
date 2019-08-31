@@ -9,6 +9,7 @@ public interface IMainContract {
         void showHomeFragment();
         void showProfileFragment();
         void showFavoriteFragment();
+        void setTitle(String title);
     }
 
     interface IPresenter extends IBasePresenter {

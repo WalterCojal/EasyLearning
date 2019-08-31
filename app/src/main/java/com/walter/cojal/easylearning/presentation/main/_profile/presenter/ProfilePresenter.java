@@ -141,6 +141,7 @@ public class ProfilePresenter implements IProfileContract.IPresenter {
                     view.hideProgress();
                     if (result.isSuccess()) {
                         user = result.getUser();
+                        interactor.saveUser(user);
                         view.fillImage(user.getImage());
                     } else {
                         view.showError(result.getMessage());

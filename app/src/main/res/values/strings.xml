@@ -20,5 +20,11 @@
     <string name="modify_my_profile">Modificar mis datos</string>
     <string name="age">Edad</string>
     <string name="birthdate">Nacimiento</string>
+    <string name="sign_up_as_assessor">Registrarme como asesor</string>
+    <string name="genre">Género</string>
+    <string name="document">Documento</string>
+    <string name="academic">Grado académico</string>
+    <string name="rating">Calificación</string>
+    <string name="logout">Cerrar sesión</string>
 
 </resources>

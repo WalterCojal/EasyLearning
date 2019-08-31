@@ -16,6 +16,7 @@ import com.walter.cojal.easylearning.base.BaseActivity;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
 import com.walter.cojal.easylearning.presentation.main.IMainContract;
+import com.walter.cojal.easylearning.presentation.main._favotire.view.FavoriteFragment;
 import com.walter.cojal.easylearning.presentation.main._home.view.HomeFragment;
 import com.walter.cojal.easylearning.presentation.main._profile.view.ProfileFragment;
 
@@ -30,15 +31,17 @@ public class MainActivity extends BaseActivity implements IMainContract.IView {
     @Inject
     ProfileFragment profileFragment;
     @Inject
+    FavoriteFragment favoriteFragment;
+    @Inject
     ProgressDialog progressDialog;
 
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
 
     FragmentTransaction fragmentTransaction;
-    private static final String FRAGMENT_TAG_HOME = "Home";
-    private static final String FRAGMENT_TAG_PROFILE = "Profile";
-    private static final String FRAGMENT_TAG_FAVORITE = "Favorite";
+    private static final String FRAGMENT_TAG_HOME = "Inicio";
+    private static final String FRAGMENT_TAG_PROFILE = "Perfil";
+    private static final String FRAGMENT_TAG_FAVORITE = "Favoritos";
 
     @Override
     protected int getContentView() {
@@ -127,7 +130,13 @@ public class MainActivity extends BaseActivity implements IMainContract.IView {
     }
 
     @Override
+    public void setTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
+    @Override
     public void showHomeFragment() {
+        setTitle(FRAGMENT_TAG_HOME);
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_fragment, homeFragment, FRAGMENT_TAG_HOME);
         fragmentTransaction.commit();
@@ -135,6 +144,7 @@ public class MainActivity extends BaseActivity implements IMainContract.IView {
 
     @Override
     public void showProfileFragment() {
+        setTitle(FRAGMENT_TAG_PROFILE);
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_fragment, profileFragment, FRAGMENT_TAG_PROFILE);
         fragmentTransaction.commit();
@@ -142,6 +152,9 @@ public class MainActivity extends BaseActivity implements IMainContract.IView {
 
     @Override
     public void showFavoriteFragment() {
-
+        setTitle(FRAGMENT_TAG_FAVORITE);
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_fragment, favoriteFragment, FRAGMENT_TAG_FAVORITE);
+        fragmentTransaction.commit();
     }
 }

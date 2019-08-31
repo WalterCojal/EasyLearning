@@ -8,5 +8,5 @@ public interface IRetrofitAssessorRepository {
 
     Observable<Result> getAll();
     Observable<Result> getAssessorData(int userId);
-
+    Observable<Result> getFavorites(int userId);
 }

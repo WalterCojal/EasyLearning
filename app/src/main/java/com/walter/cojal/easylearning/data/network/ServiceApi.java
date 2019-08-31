@@ -52,4 +52,7 @@ public interface ServiceApi {
     @GET("getAssessorData/{id}")
     Observable<Result> getAssessorData(@Path("id") int userId);
 
+    @GET("getFavorites/{id}")
+    Observable<Result> getFavorites(@Path("id") int userId);
+
 }

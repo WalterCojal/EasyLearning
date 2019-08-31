@@ -18,6 +18,8 @@ import com.walter.cojal.easylearning.data.repository.user.PreferenceUserReposito
 import com.walter.cojal.easylearning.data.repository.user.RetrofitRetrofitUserRepositoryImpl;
 import com.walter.cojal.easylearning.di.scope.PerActivity;
 import com.walter.cojal.easylearning.di.scope.Qualifiers;
+import com.walter.cojal.easylearning.domain.main_interactor.favorite_interactor.FavoriteInteractorImpl;
+import com.walter.cojal.easylearning.domain.main_interactor.favorite_interactor.IFavoriteInteractor;
 import com.walter.cojal.easylearning.domain.main_interactor.home_interactor.HomeInteractorImpl;
 import com.walter.cojal.easylearning.domain.main_interactor.home_interactor.IHomeInteractor;
 import com.walter.cojal.easylearning.domain.login_interactor.ILoginInteractor;
@@ -30,6 +32,8 @@ import com.walter.cojal.easylearning.domain.start_interactor.IStartInteractor;
 import com.walter.cojal.easylearning.domain.start_interactor.StartInteractorImpl;
 import com.walter.cojal.easylearning.data.network.ServiceApi;
 import com.walter.cojal.easylearning.presentation.main.IMainContract;
+import com.walter.cojal.easylearning.presentation.main._favotire.view.FavoriteAdapter;
+import com.walter.cojal.easylearning.presentation.main._favotire.view.FavoriteFragment;
 import com.walter.cojal.easylearning.presentation.main._home.view.AssessorAdapter;
 import com.walter.cojal.easylearning.presentation.main._home.view.HomeFragment;
 import com.walter.cojal.easylearning.presentation.main._profile.view.ProfileFragment;
@@ -153,6 +157,25 @@ public class PresentationModule {
                                                 @Qualifiers.UiThread Scheduler uiThread,
                                                 @Qualifiers.ExecutorThread Scheduler executorThread) {
         return new ProfileInteractorImpl(preferenceUser, retrofitUser, retrofitAssessor, uiThread, executorThread);
+    }
+
+    // Favorite Fragment
+    @Provides
+    FavoriteFragment provideFavoriteFragment() {
+        return new FavoriteFragment();
+    }
+
+    @Provides
+    FavoriteAdapter provideFavoriteAdapter(Picasso picasso) {
+        return new FavoriteAdapter(picasso);
+    }
+
+    @Provides
+    IFavoriteInteractor provideFavoriteInteractor(IPreferenceUserRepository userRepository,
+                                                  IRetrofitAssessorRepository assessorRepository,
+                                                  @Qualifiers.UiThread Scheduler uiThread,
+                                                  @Qualifiers.ExecutorThread Scheduler executorThread) {
+        return new FavoriteInteractorImpl(userRepository, assessorRepository, uiThread, executorThread);
     }
 
 }

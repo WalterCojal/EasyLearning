@@ -25,4 +25,9 @@ public class RetrofitRetrofitAssessorRepositoryImpl implements IRetrofitAssessor
     public Observable<Result> getAssessorData(int userId) {
         return serviceApi.getAssessorData(userId);
     }
+
+    @Override
+    public Observable<Result> getFavorites(int userId) {
+        return serviceApi.getFavorites(userId);
+    }
 }

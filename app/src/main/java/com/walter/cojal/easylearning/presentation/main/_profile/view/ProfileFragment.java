@@ -200,6 +200,7 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
         edtEmail.setText(user.getEmail());
         edtAge.setText(String.valueOf(user.getAge()));
         edtBirthDate.setText(user.getBirthDate());
+        fillImage(user.getImage());
     }
 
     @Override
@@ -282,18 +283,22 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK){
             // picasso.load(mPhotoFile).into(imgIcon);
-            byte[] bytes = Utils.getBytesPhoto(currentPhotoPath);
-            try {
-                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(mPhotoFile));
-                bos.write(bytes);
-                bos.flush();
-                bos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            resizeImage(currentPhotoPath, mPhotoFile);
             RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), mPhotoFile);
             MultipartBody.Part image = MultipartBody.Part.createFormData("media", mPhotoFile.getName(), requestBody);
             presenter.updateUserImage(image);
+        }
+    }
+
+    private void resizeImage(String path, File file) {
+        byte[] bytes = Utils.getBytesPhoto(path);
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bos.write(bytes);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
