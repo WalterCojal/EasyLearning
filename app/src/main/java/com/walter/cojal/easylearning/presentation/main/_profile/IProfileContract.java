@@ -17,6 +17,7 @@ public interface IProfileContract {
         void fillImage(String path);
         void goToLogin();
         void showAssessorData(boolean edition);
+        void goToNewAssessor();
     }
 
     interface IPresenter extends IBasePresenter {

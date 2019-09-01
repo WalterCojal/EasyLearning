@@ -12,11 +12,12 @@ public interface IHomeContract {
         void getDataSuccess(ArrayList<Assessor> items);
         void showEmptyAssessor(String message);
         void goToAssessorDetail(int assessorId);
+        void favoriteSuccess(int position);
     }
 
     interface IPresenter extends IBasePresenter {
         void getData();
-        void addFavorite(int assessorId);
+        void addFavorite(int assessorId, int position);
         void assessorDetail(Assessor assessor);
     }
 

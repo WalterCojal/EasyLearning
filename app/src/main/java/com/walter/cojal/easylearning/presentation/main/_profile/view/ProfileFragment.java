@@ -30,6 +30,7 @@ import com.walter.cojal.easylearning.data.entities.Assessor;
 import com.walter.cojal.easylearning.data.entities.User;
 import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
+import com.walter.cojal.easylearning.presentation.assessor.view.AssessorActivity;
 import com.walter.cojal.easylearning.presentation.login.view.LoginActivity;
 import com.walter.cojal.easylearning.presentation.main._profile.IProfileContract;
 import com.walter.cojal.easylearning.presentation.main._profile.presenter.ProfilePresenter;
@@ -139,21 +140,27 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO logout
+                presenter.logout();
             }
         });
         btnAddAssessor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO go to add assessor activity
+                goToNewAssessor();
             }
         });
         editAssessor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO edit assessor
+                // save assessor data
             }
         });
+    }
+
+    @Override
+    public void goToNewAssessor() {
+        Intent intent = new Intent(getActivity(), AssessorActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -239,12 +246,13 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
         edtAcademic.setText(assessor.getAcademic());
         int rating = (int) Math.round(assessor.getRating());
         edtRating.setText(String.valueOf(rating));
-        layoutAssessor.setVisibility(View.GONE);
+        layoutAssessor.setVisibility(View.VISIBLE);
+        btnAddAssessor.setVisibility(View.GONE);
     }
 
     @Override
     public void fillImage(String path) {
-        picasso.load(path).into(imgIcon);
+        picasso.load(path).placeholder(R.drawable.ic_user).into(imgIcon);
     }
 
     @Override
@@ -258,6 +266,7 @@ public class ProfileFragment extends BaseFragment implements IProfileContract.IV
     public void goToLogin() {
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

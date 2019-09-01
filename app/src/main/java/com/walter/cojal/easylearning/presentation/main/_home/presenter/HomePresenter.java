@@ -81,7 +81,7 @@ public class HomePresenter implements IHomeContract.IPresenter {
     }
 
     @Override
-    public void addFavorite(int assessorId) {
+    public void addFavorite(int assessorId, final int position) {
         view.showProgress();
         interactor.addFavorite(user.getId(), assessorId).subscribe(new Observer<Result>() {
             @Override
@@ -94,7 +94,7 @@ public class HomePresenter implements IHomeContract.IPresenter {
                 if (isViewAttached()) {
                     view.hideProgress();
                     if (result.isSuccess()) {
-
+                        view.favoriteSuccess(position);
                     } else {
                         view.showError(result.getMessage());
                     }

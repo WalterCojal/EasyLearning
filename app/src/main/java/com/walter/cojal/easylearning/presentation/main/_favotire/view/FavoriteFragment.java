@@ -20,6 +20,8 @@ import com.walter.cojal.easylearning.di.component.DaggerPresentationComponent;
 import com.walter.cojal.easylearning.di.module.PresentationModule;
 import com.walter.cojal.easylearning.presentation.main._favotire.IFavoriteContract;
 import com.walter.cojal.easylearning.presentation.main._favotire.presenter.FavoritePresenter;
+import com.walter.cojal.easylearning.presentation.main._home.view.AssessorAdapter;
+import com.walter.cojal.easylearning.presentation.main._home.view.OnAssessorListener;
 
 import java.util.ArrayList;
 
@@ -32,7 +34,7 @@ public class FavoriteFragment extends BaseFragment implements IFavoriteContract.
     @Inject
     ProgressDialog progressDialog;
     @Inject
-    FavoriteAdapter favoriteAdapter;
+    AssessorAdapter assessorAdapter;
 
     private RecyclerView favorites;
     private TextView empty;
@@ -69,12 +71,22 @@ public class FavoriteFragment extends BaseFragment implements IFavoriteContract.
         favorites = getActivity().findViewById(R.id.favorite_items);
         favorites.setLayoutManager(new LinearLayoutManager(getActivity()));
         favorites.setItemAnimator(new DefaultItemAnimator());
-        favorites.setAdapter(favoriteAdapter);
+        favorites.setAdapter(assessorAdapter);
     }
 
     @Override
     public void setupListeners() {
+        assessorAdapter.setOnAssessorClickListener(new OnAssessorListener() {
+            @Override
+            public void itemViewClick(Assessor assessor) {
 
+            }
+
+            @Override
+            public void itemFavClick(int assessorId, int position) {
+                presenter.deleteItem(assessorId, position);
+            }
+        });
     }
 
     @Override
@@ -104,7 +116,7 @@ public class FavoriteFragment extends BaseFragment implements IFavoriteContract.
     public void showItems(ArrayList<Assessor> items) {
         favorites.setVisibility(View.VISIBLE);
         empty.setVisibility(View.GONE);
-        favoriteAdapter.updateItems(items);
+        assessorAdapter.setItems(items);
     }
 
     @Override
@@ -115,7 +127,8 @@ public class FavoriteFragment extends BaseFragment implements IFavoriteContract.
 
     @Override
     public void updateItemDeleted(int position) {
-        // TODO eliminar item de adapter
+        assessorAdapter.removeItem(position);
+        if (assessorAdapter.getItemCount() == 0) showNoItems();
     }
 
     @Override

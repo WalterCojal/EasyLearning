@@ -46,4 +46,9 @@ public class RetrofitAssessorRepositoryImpl implements IRetrofitAssessorReposito
     public Observable<Result> addAssessor(RequestBody genre, RequestBody document, RequestBody academic, RequestBody assignments, int userId) {
         return serviceApi.addAssessor(genre, document, academic, assignments, userId);
     }
+
+    @Override
+    public Observable<Result> getLists() {
+        return serviceApi.getLists();
+    }
 }

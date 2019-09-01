@@ -33,13 +33,27 @@ public class AssessorInteractorImpl implements IAssessorInteractor {
     }
 
     @Override
+    public void saveUser(User user) {
+        userRepository.saveUser(user);
+    }
+
+    @Override
     public Observable<Result> addAssessor(RequestBody genre, RequestBody document, RequestBody academic, RequestBody assignments, int userId) {
-        return assessorRepository.addAssessor(genre, document, academic, assignments, userId);
+        return assessorRepository.addAssessor(genre, document, academic, assignments, userId)
+                .observeOn(uiThread)
+                .subscribeOn(executorThread);
     }
 
     @Override
     public Observable<Result> addImage(MultipartBody.Part image, int userId) {
         return retrofitUserRepository.updateImage(image, userId)
+                .observeOn(uiThread)
+                .subscribeOn(executorThread);
+    }
+
+    @Override
+    public Observable<Result> getLists() {
+        return assessorRepository.getLists()
                 .observeOn(uiThread)
                 .subscribeOn(executorThread);
     }

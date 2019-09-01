@@ -36,4 +36,11 @@ public class FavoriteInteractorImpl implements IFavoriteInteractor {
                 .observeOn(uiThread)
                 .subscribeOn(executorThread);
     }
+
+    @Override
+    public Observable<Result> removeFavorite(int userId, int assessorId) {
+        return assessorRepository.addFavorite(userId, assessorId)
+                .observeOn(uiThread)
+                .subscribeOn(executorThread);
+    }
 }

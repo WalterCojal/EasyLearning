@@ -80,7 +80,38 @@ public class FavoritePresenter implements IFavoriteContract.IPresenter {
     }
 
     @Override
-    public void deleteItem(int assessorId) {
+    public void deleteItem(int assessorId, final int position) {
+        view.showProgress();
+        interactor.removeFavorite(user.getId(), assessorId).subscribe(new Observer<Result>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                disposable = d;
+            }
 
+            @Override
+            public void onNext(Result result) {
+                if (isViewAttached()) {
+                    view.hideProgress();
+                    if (result.isSuccess()) {
+                        view.updateItemDeleted(position);
+                    } else {
+                        view.showError(result.getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (isViewAttached()) {
+                    view.hideProgress();
+                    view.showError(e.getLocalizedMessage());
+                }
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }

@@ -9,5 +9,6 @@ public interface IFavoriteInteractor {
 
     User getUser();
     Observable<Result> getFavorites(int userId);
+    Observable<Result> removeFavorite(int userId, int assessorId);
 
 }

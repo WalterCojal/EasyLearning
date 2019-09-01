@@ -33,8 +33,8 @@ import com.walter.cojal.easylearning.domain.signup_interactor.ISignupInteractor;
 import com.walter.cojal.easylearning.domain.signup_interactor.SignupInteractorImpl;
 import com.walter.cojal.easylearning.domain.start_interactor.IStartInteractor;
 import com.walter.cojal.easylearning.domain.start_interactor.StartInteractorImpl;
+import com.walter.cojal.easylearning.presentation.assessor.view.StringSelectorFragment;
 import com.walter.cojal.easylearning.presentation.main.IMainContract;
-import com.walter.cojal.easylearning.presentation.main._favotire.view.FavoriteAdapter;
 import com.walter.cojal.easylearning.presentation.main._favotire.view.FavoriteFragment;
 import com.walter.cojal.easylearning.presentation.main._home.view.AssessorAdapter;
 import com.walter.cojal.easylearning.presentation.main._home.view.HomeFragment;
@@ -170,11 +170,6 @@ public class PresentationModule {
     }
 
     @Provides
-    FavoriteAdapter provideFavoriteAdapter(Picasso picasso) {
-        return new FavoriteAdapter(picasso);
-    }
-
-    @Provides
     IFavoriteInteractor provideFavoriteInteractor(IPreferenceUserRepository userRepository,
                                                   IRetrofitAssessorRepository assessorRepository,
                                                   @Qualifiers.UiThread Scheduler uiThread,
@@ -190,5 +185,10 @@ public class PresentationModule {
                                                   @Qualifiers.UiThread Scheduler uiThread,
                                                   @Qualifiers.ExecutorThread Scheduler executorThread) {
         return new AssessorInteractorImpl(assessorRepository, userRepository, retrofitUserRepository, uiThread, executorThread);
+    }
+
+    @Provides
+    StringSelectorFragment provideStringSelectorFragment() {
+        return new StringSelectorFragment();
     }
 }

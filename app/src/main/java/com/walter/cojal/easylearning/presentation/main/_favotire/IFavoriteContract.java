@@ -16,7 +16,7 @@ public interface IFavoriteContract {
 
     interface IPresenter extends IBasePresenter {
         void getFavorites();
-        void deleteItem(int assessorId);
+        void deleteItem(int assessorId, int position);
     }
 
 }

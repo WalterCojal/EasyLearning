@@ -217,20 +217,17 @@ public class LoginActivity extends BaseActivity implements ILoginContract.IView 
 
     @Override
     public void loginError(String message, int status) {
-        statusFragment = new LoginStatusFragment();
-        statusFragment.show(getSupportFragmentManager(), "LoginStatusFragment");
-        statusFragment.setMessage(message);
-        statusFragment.setAgreeText(getString(R.string.agree));
+        String cancel = "";
         switch (status) {
             case 0: {
-                statusFragment.setCancelText(getString(R.string.create_account));
-                break;
+                cancel = getString(R.string.create_account); break;
             }
             case 1: {
-                statusFragment.setCancelText(getString(R.string.recover_password));
-                break;
+                cancel = getString(R.string.recover_password); break;
             }
         }
+        statusFragment = new LoginStatusFragment(message, cancel);
+        statusFragment.show(getSupportFragmentManager(), "LoginStatusFragment");
         statusFragment.setOnClickListener(new OnLoginStatusClick() {
             @Override
             public void onClick(View view) {

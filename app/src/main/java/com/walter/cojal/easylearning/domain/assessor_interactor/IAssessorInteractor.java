@@ -10,7 +10,9 @@ import okhttp3.RequestBody;
 public interface IAssessorInteractor {
 
     User getUser();
+    void saveUser(User user);
     Observable<Result> addAssessor(RequestBody genre, RequestBody document, RequestBody academic, RequestBody assignments, int userId);
     Observable<Result> addImage(MultipartBody.Part image, int userId);
+    Observable<Result> getLists();
 
 }

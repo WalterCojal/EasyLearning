@@ -5,12 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.walter.cojal.easylearning.R;
 import com.walter.cojal.easylearning.data.entities.Assessor;
@@ -30,7 +30,7 @@ public class AssessorAdapter extends RecyclerView.Adapter<AssessorAdapter.MyView
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView txtName, txtProfession, txtAge, txtRating;
-        ImageView imgIcon;
+        RoundedImageView imgIcon;
         Button btnFav;
 
         MyViewHolder(@NonNull View itemView) {
@@ -60,9 +60,10 @@ public class AssessorAdapter extends RecyclerView.Adapter<AssessorAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         final Assessor assessor = items.get(position);
-        holder.txtName.setText(assessor.getName());
-        holder.txtProfession.setText(assessor.getLastName());
+        holder.txtName.setText(assessor.getName() + " " + assessor.getLastName());
+        holder.txtProfession.setText(assessor.getAcademic());
         holder.txtAge.setText(assessor.getAge() + " años");
+        picasso.load(assessor.getImage()).into(holder.imgIcon);
         if (assessor.getFavorite() == 0) {
             holder.btnFav.setBackgroundResource(R.drawable.ic_heart);
         } else {
@@ -71,27 +72,35 @@ public class AssessorAdapter extends RecyclerView.Adapter<AssessorAdapter.MyView
         holder.btnFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                assessorListener.itemFavClick(items.get(holder.getAdapterPosition()).getId());
+                assessorListener.itemFavClick(items.get(holder.getAdapterPosition()).getId(), holder.getAdapterPosition());
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        if (items == null) return 0;
+        else return items.size();
     }
 
-    void setItems(ArrayList<Assessor> items) {
+    public void setItems(ArrayList<Assessor> items) {
         this.items = items;
         notifyDataSetChanged();
     }
 
-    void setOnAssessorClickListener(OnAssessorListener assessorListener) {
+    public void setOnAssessorClickListener(OnAssessorListener assessorListener) {
         this.assessorListener = assessorListener;
     }
 
-    void updateItemFavorite(int position, boolean favorite) {
-        items.get(position).setFavorite(favorite? 1:0);
+    public void updateItemFavorite(int position) {
+        int fav = items.get(position).getFavorite();
+        if (fav == 1) items.get(position).setFavorite(0);
+        else items.get(position).setFavorite(1);
         notifyItemChanged(position);
+    }
+
+    public void removeItem(int position) {
+        items.remove(position);
+        notifyItemRemoved(position);
     }
 }

@@ -51,7 +51,7 @@ public interface ServiceApi {
     Observable<Result> getHomeData(@Path("id") int userId);
 
     @Multipart
-    @POST("addAssessor/{id}")
+    @POST("addAssessor/{user_id}")
     Observable<Result> addAssessor(@Part("genre") RequestBody genre,
                                    @Part("document") RequestBody document,
                                    @Part("academic") RequestBody academic,
@@ -71,5 +71,8 @@ public interface ServiceApi {
 
     @GET("getAssessorDetail/{id}")
     Observable<Result> getAssessorDetail(@Path("id") int assessorId);
+
+    @GET("getAcademicList")
+    Observable<Result> getLists();
 
 }

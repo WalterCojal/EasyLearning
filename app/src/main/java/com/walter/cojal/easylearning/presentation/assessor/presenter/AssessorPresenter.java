@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class AssessorPresenter implements IAssessorContract.IPresenter {
@@ -22,6 +23,8 @@ public class AssessorPresenter implements IAssessorContract.IPresenter {
     IAssessorInteractor interactor;
     Disposable disposable;
     User user;
+    ArrayList<String> genres = new ArrayList<>();
+    ArrayList<String> academics = new ArrayList<>();
 
     @Inject
     public AssessorPresenter(IAssessorInteractor interactor) {
@@ -42,6 +45,16 @@ public class AssessorPresenter implements IAssessorContract.IPresenter {
     }
 
     @Override
+    public void setupGenres() {
+        view.showGenreOptions(genres);
+    }
+
+    @Override
+    public void setupAcademics() {
+        view.showAcademicOptions(academics);
+    }
+
+    @Override
     public boolean isViewAttached() {
         return view != null;
     }
@@ -50,7 +63,6 @@ public class AssessorPresenter implements IAssessorContract.IPresenter {
     public void addAssessor(String genre, String document, String academic, ArrayList<String> assignments) {
         if (!view.validate()) return;
         view.showProgress();
-        user = interactor.getUser();
         RequestBody rbGenre = RequestBody.create(MediaType.parse("text/plain"), genre.trim());
         RequestBody rbDocument = RequestBody.create(MediaType.parse("text/plain"), document.trim());
         RequestBody rbAcademic = RequestBody.create(MediaType.parse("text/plain"), academic.trim());
@@ -67,9 +79,9 @@ public class AssessorPresenter implements IAssessorContract.IPresenter {
                 if (isViewAttached()) {
                     view.hideProgress();
                     if (result.isSuccess()) {
-
+                        view.goToMain();
                     } else {
-
+                        view.showError(result.getMessage());
                     }
                 }
             }
@@ -79,6 +91,80 @@ public class AssessorPresenter implements IAssessorContract.IPresenter {
                 if (isViewAttached()) {
                     view.hideProgress();
                     view.showError(e.getLocalizedMessage());
+                }
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void getLists() {
+        view.showProgress();
+        user = interactor.getUser();
+        interactor.getLists().subscribe(new Observer<Result>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                disposable = d;
+            }
+
+            @Override
+            public void onNext(Result result) {
+                if (isViewAttached()) {
+                    view.hideProgress();
+                    genres.add("Masculino");
+                    genres.add("Femenino");
+                    academics = result.getAcademicList();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (isViewAttached()) {
+                    view.hideProgress();
+                    view.enableEditors();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void setImage(MultipartBody.Part image) {
+        view.showProgress();
+        interactor.addImage(image, user.getId()).subscribe(new Observer<Result>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                disposable = d;
+            }
+
+            @Override
+            public void onNext(Result result) {
+                if (isViewAttached()) {
+                    view.hideProgress();
+                    if (result.isSuccess()) {
+                        user.setImage(result.getUser().getImage());
+                        interactor.saveUser(user);
+                        view.updateImage();
+                    } else {
+                        view.clearImage();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (isViewAttached()) {
+                    view.hideProgress();
+                    view.showError(e.getLocalizedMessage());
+                    view.clearImage();
                 }
             }
 

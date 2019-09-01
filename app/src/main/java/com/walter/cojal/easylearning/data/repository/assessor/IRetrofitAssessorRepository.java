@@ -13,4 +13,5 @@ public interface IRetrofitAssessorRepository {
     Observable<Result> addFavorite(int userId, int assessorId);
     Observable<Result> getAssessorDetail(int assessorId);
     Observable<Result> addAssessor(RequestBody genre, RequestBody document, RequestBody academic, RequestBody assignments, int userId);
+    Observable<Result> getLists();
 }
