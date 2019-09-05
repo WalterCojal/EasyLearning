@@ -232,6 +232,7 @@ public class AssessorActivity extends BaseActivity implements IAssessorContract.
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        finishAffinity();
     }
 
     @Override

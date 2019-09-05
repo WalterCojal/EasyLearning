@@ -49,7 +49,7 @@ public interface ServiceApi {
     Observable<Result> validatePhone(@Field("phone") String phone);
 
     @GET("getHomeData/{id}")
-    Observable<Result> getHomeData(@Header("api_token") String token, @Header("id") String id, @Path("id") int userId);
+    Observable<Result> getHomeData(@Path("id") int userId);
 
     @Multipart
     @POST("addAssessor/{user_id}")

@@ -23,7 +23,7 @@ public class RetrofitAssessorRepositoryImpl implements IRetrofitAssessorReposito
 
     @Override
     public Observable<Result> getAll(int userId) {
-        return serviceApi.getHomeData(savePreferences.getString(Constants.API_TOKEN), savePreferences.getString(Constants.USER_ID), userId);
+        return serviceApi.getHomeData(userId);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.walter.cojal.easylearning.di.module;
 import android.app.Activity;
 import android.app.ProgressDialog;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.picasso.Picasso;
 import com.walter.cojal.easylearning.data.network.ServiceApi;
 import com.walter.cojal.easylearning.data.repository.assessor.IPreferenceAssessorRepository;
@@ -40,11 +41,20 @@ import com.walter.cojal.easylearning.presentation.main._home.view.AssessorAdapte
 import com.walter.cojal.easylearning.presentation.main._home.view.HomeFragment;
 import com.walter.cojal.easylearning.presentation.main._profile.view.ProfileFragment;
 import com.walter.cojal.easylearning.presentation.main.presenter.MainPresenter;
+import com.walter.cojal.easylearning.utility.Constants;
 import com.walter.cojal.easylearning.utility.SavePreferences;
+
+import java.io.IOException;
 
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Scheduler;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class PresentationModule {
