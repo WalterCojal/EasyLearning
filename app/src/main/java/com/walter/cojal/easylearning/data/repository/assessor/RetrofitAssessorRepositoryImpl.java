@@ -2,6 +2,8 @@ package com.walter.cojal.easylearning.data.repository.assessor;
 
 import com.walter.cojal.easylearning.data.entities.Result;
 import com.walter.cojal.easylearning.data.network.ServiceApi;
+import com.walter.cojal.easylearning.utility.Constants;
+import com.walter.cojal.easylearning.utility.SavePreferences;
 
 import javax.inject.Inject;
 
@@ -11,15 +13,17 @@ import okhttp3.RequestBody;
 public class RetrofitAssessorRepositoryImpl implements IRetrofitAssessorRepository {
 
     ServiceApi serviceApi;
+    SavePreferences savePreferences;
 
     @Inject
-    public RetrofitAssessorRepositoryImpl(ServiceApi serviceApi) {
+    public RetrofitAssessorRepositoryImpl(ServiceApi serviceApi, SavePreferences savePreferences) {
         this.serviceApi = serviceApi;
+        this.savePreferences = savePreferences;
     }
 
     @Override
     public Observable<Result> getAll(int userId) {
-        return serviceApi.getHomeData(userId);
+        return serviceApi.getHomeData(savePreferences.getString(Constants.API_TOKEN), savePreferences.getString(Constants.USER_ID), userId);
     }
 
     @Override

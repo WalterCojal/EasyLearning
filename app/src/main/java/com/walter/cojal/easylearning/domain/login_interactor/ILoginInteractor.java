@@ -11,5 +11,6 @@ public interface ILoginInteractor {
     Observable<Result> validatePhone(String phone);
     void saveUser(User user);
     void saveApiToken(String token);
+    void saveUserId(int userId);
 
 }

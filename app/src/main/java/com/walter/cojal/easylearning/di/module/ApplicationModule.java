@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.squareup.picasso.Picasso;
-import com.walter.cojal.easylearning.di.scope.Qualifiers;
 import com.walter.cojal.easylearning.data.network.ServiceApi;
+import com.walter.cojal.easylearning.di.scope.Qualifiers;
 import com.walter.cojal.easylearning.utility.Constants;
 import com.walter.cojal.easylearning.utility.SavePreferences;
 

@@ -20,6 +20,11 @@ public class PreferenceAuthRepositoryImpl implements IPreferenceAuthRepository {
     }
 
     @Override
+    public void saveUserId(int userId) {
+        savePreferences.saveString(Constants.USER_ID, String.valueOf(userId));
+    }
+
+    @Override
     public void logout() {
         savePreferences.clearPreferences();
     }

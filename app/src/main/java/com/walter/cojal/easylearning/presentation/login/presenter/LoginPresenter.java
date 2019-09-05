@@ -52,6 +52,7 @@ public class LoginPresenter implements ILoginContract.IPresenter {
                     view.hideProgress();
                     if (result.isSuccess()) {
                         interactor.saveUser(result.getUser());
+                        interactor.saveUserId(result.getUser().getId());
                         interactor.saveApiToken(result.getApiToken());
                         view.loginSuccess(result.getUser(), result.getApiToken());
                     } else {

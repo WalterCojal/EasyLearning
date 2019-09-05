@@ -10,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -48,7 +49,7 @@ public interface ServiceApi {
     Observable<Result> validatePhone(@Field("phone") String phone);
 
     @GET("getHomeData/{id}")
-    Observable<Result> getHomeData(@Path("id") int userId);
+    Observable<Result> getHomeData(@Header("api_token") String token, @Header("id") String id, @Path("id") int userId);
 
     @Multipart
     @POST("addAssessor/{user_id}")

@@ -91,8 +91,8 @@ public class PresentationModule {
     }
 
     @Provides
-    IRetrofitAssessorRepository provideRetrofitAssessorRepository(ServiceApi serviceApi) {
-        return new RetrofitAssessorRepositoryImpl(serviceApi);
+    IRetrofitAssessorRepository provideRetrofitAssessorRepository(ServiceApi serviceApi, SavePreferences savePreferences) {
+        return new RetrofitAssessorRepositoryImpl(serviceApi, savePreferences);
     }
 
     // ============================================ Login ============================================ //

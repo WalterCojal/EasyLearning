@@ -51,4 +51,9 @@ public class LoginInteractorImpl implements ILoginInteractor {
     public void saveApiToken(String token) {
         preferenceAuthRepository.saveToken(token);
     }
+
+    @Override
+    public void saveUserId(int userId) {
+        preferenceAuthRepository.saveUserId(userId);
+    }
 }
