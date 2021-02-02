@@ -5,6 +5,7 @@ pipeline {
       steps {
         echo 'Run SonarQube'
         withSonarQubeEnv(credentialsId: 'MySonar', installationName: 'Sonar') {
+          sh 'gradle sonarque'
           waitForQualityGate(abortPipeline: true, credentialsId: 'MySonar')
         }
 
