@@ -4,7 +4,7 @@ pipeline {
     stage('Sonar') {
       steps {
         echo 'Run SonarQube'
-        sh 'gradle sonarqube'
+        withSonarQubeEnv(installationName: 'sonar', credentialsId: 'MySonar')
       }
     }
 
