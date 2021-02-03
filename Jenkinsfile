@@ -4,7 +4,7 @@ pipeline {
     stage('Sonar') {
       steps {
         echo 'Run SonarQube'
-        sh 'gradle sonarqube'
+        sh 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dlicense.skip=true'
       }
     }
 
@@ -17,6 +17,7 @@ pipeline {
 
   }
   tools {
+    maven 'maven3.6.3'
     gradle 'gradle6.8.1'
   }
   post {
